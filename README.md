@@ -6,7 +6,7 @@
 L’application permettra de gérer différents types d'évènements (conférences, meetups, workshops, ...). Chaque évènements a comme information principale son titre, sa description, sa date un logo associé.
 
 - Un évènement *Event* est lié à une catégorie *Category*, un createur *User* et a des participants *User*
-- Une Category est représenté par une chaine de caractere.
+- Une Category est composée d'une chaine de caratere *name*.
 - Un *User* est représenter par un nom, prénom, email, password.
 
 ## Consignes
