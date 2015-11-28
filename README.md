@@ -3,7 +3,7 @@
 ## Gestion évènementielle
 -------------------------
 
-L’application permettra de gérer différents types d'évènements (conférences, meetups, workshops, ...). Chaque évènements a comme information principale son titre, sa description, sa date un logo associé.
+L’application permettra de gérer différents types d'évènements (conférences, meetups, workshops, ...). Chaque évènement a comme information principale son titre, sa description, sa date un logo associé.
 
 - Un évènement *Event* est lié à une catégorie *Category*, un createur *User* et a des participants *User*
 - Une Category est composée d'une chaine de caratere *name*.
