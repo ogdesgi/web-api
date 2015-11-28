@@ -41,4 +41,4 @@ Une présentation ( 5 slides ) devra être également fourni en début de souten
 - Qualité de code/commit/présentation 4pts
 
 
-#### Happy Coding!
+#### Happy Coding! © julien-sarazin teaching @ esgi 2015-2016
