@@ -4,16 +4,16 @@
 2. start the server with the command `node server`
 
 
-##Service layer
+### Service layer
 >routes/  
 >middlewares/  
 
-##Business layer
+### Business layer
 >actions/
 
-##Persistence layer
+### Persistence layer
 >models/
 
 
-##Available configurations
+### Available configurations
 > settings/
