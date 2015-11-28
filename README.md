@@ -12,7 +12,8 @@ L’application permettra de gérer différents types d'évènements (conférenc
 ## Consignes
 -------------
 ### Serveur 
-- Le serveur NodeJS/ExpressJS utilisera une base MongoDB avec l'ODM Mongoose pour stocker les données.
+Le serveur NodeJS/ExpressJS utilisera une base MongoDB avec l'ODM Mongoose pour stocker les données.
+Il devra être capable de répondre aux requêtes HTTP faire par un autre client que celui développé dans ce projet.
 
 ### Client 
 >#### (FO)
@@ -21,7 +22,7 @@ L’application permettra de gérer différents types d'évènements (conférenc
 >- la capacité de trier par chronologie 
 >- la possibilité de filtrer par category ou par date (Passé / A venir / All).
 
-#### (BO)
+>#### (BO)
 >- Créer une category (authentification requise)
 >- Modifier/supprimer une catégorie (uniquement si la catégory n'a pas d'evenement attaché)
 >- Créer un evenement (authentification requise)
