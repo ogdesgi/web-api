@@ -4,6 +4,7 @@ var bodyparser = require('body-parser').json();
 module.exports = function(app){
     router.post('/',
         bodyparser,
+        app.middlewares.authenticated,
         app.actions.todos.create
     );
 

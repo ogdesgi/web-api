@@ -5,4 +5,5 @@ module.exports = function(app){
 
     app.models = {};
     app.models.Todo = require('./Todo')(app);
+    app.models.User = require('./User')(app);
 };

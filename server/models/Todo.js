@@ -3,6 +3,11 @@ module.exports = function(app){
         title: {
             type: String,
             required: true
+        },
+        userId: {
+            type: app.mongoose.Schema.ObjectId,
+            ref: 'User',
+            required: true
         }
     });
 
