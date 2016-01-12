@@ -8,7 +8,7 @@ L’application permettra de gérer différents types d'évènements (conférenc
 - Un évènement *Event* est lié à une catégorie *Category*, un createur *User* et a des participants *User*
 - Une Category est composée d'une chaine de caratere *name*.
 - Un *User* est représenter par un nom, prénom, email, password.
-
+  - le password devra être hash et ne jamais être transmis dans les échanges clients/serveur. Excepté lors de sa création.
 ## Consignes
 -------------
 ### Serveur 
