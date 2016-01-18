@@ -3,6 +3,7 @@ var express = require('express');
 var api = express();
 
 (function init(){
+	api.use(express.static('storage')); // new for uploading images
 	require('./settings')(api);
 	require('./models')(api);
 	require('./middlewares')(api);
