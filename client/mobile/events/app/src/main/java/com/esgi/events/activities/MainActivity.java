@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         String url="http://api.androidhive.info/volley/person_object.json";
         eventArrayList = new ArrayList<>();
         final Event event = new Event();
+        final Event event2 = new Event();
+        final Event event3 = new Event();
 
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -55,16 +57,23 @@ public class MainActivity extends AppCompatActivity {
                     //JSONArray arrProducts = jsonObject.getJSONArray("products");
                     //for(int i=0; i<arrProducts.length(); i++){
                         //JSONObject productItem = (JSONObject)arrProducts.get(i);
-                    Log.d(TAG, "onResponse: "+jsonObject.getString("email"));
+                    Log.d(TAG, "onResponse: " + jsonObject.getString("email"));
                         event.setTitle(jsonObject.getString("email"));
-                        event.setDate(new Date());
+                        event2.setTitle(jsonObject.getString("email"));
+                        event3.setTitle(jsonObject.getString("email"));
+                    event.setPhotoPath("http://www.wepeek.fr/wp-content/uploads/2015/08/Groupe-de-travail.jpg");
+                    event2.setPhotoPath("http://www.secretaire-inc.com/image9043");
+                    event3.setPhotoPath("http://www.frenchweb.fr/wp-content/uploads/2014/02/Meeting.png");
+                        //event.setDate(new Date());
                         //textResult += "Description: " + jsonObject.getString("email") + "\n";
                         //textResult += "Price: " + jsonObject.getString("phone") + "\n\n";
                    // }
 
                     eventArrayList.add(event);
+                    eventArrayList.add(event2);
+                    eventArrayList.add(event3);
                     eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList));
+                    eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList,MainActivity.this));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
