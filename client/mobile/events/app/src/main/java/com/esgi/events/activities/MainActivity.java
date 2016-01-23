@@ -2,12 +2,22 @@ package com.esgi.events.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.e.api.events.R;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.esgi.events.R;
+import com.esgi.events.adapters.EventsListAdapter;
+import com.esgi.events.helpers.VolleyHelper;
+import com.esgi.events.models.Event;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,41 +25,46 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = getClass().getName();
+    private RecyclerView eventRecyclerView;
     private TextView title;
-
-    private void init(){
-        title = (TextView) findViewById(R.id.test);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-    }
+    private final String TAG = getClass().getSimpleName();
+    ArrayList<Event> eventArrayList ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
+        this.toolbarInit();
         this.init();
 
         String url="http://api.androidhive.info/volley/person_object.json";
+        eventArrayList = new ArrayList<>();
+        final Event event = new Event();
 
-        /*final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                title.setText("Response: " + jsonObject.toString());
+//                title.setText("Response: " + jsonObject.toString());
                 String textResult = "";
                 try {
                     //JSONArray arrProducts = jsonObject.getJSONArray("products");
                     //for(int i=0; i<arrProducts.length(); i++){
                         //JSONObject productItem = (JSONObject)arrProducts.get(i);
-                        textResult += "Name: " + jsonObject.getString("name") + "\n";
-                        textResult += "Description: " + jsonObject.getString("email") + "\n";
-                        textResult += "Price: " + jsonObject.getString("phone") + "\n\n";
+                    Log.d(TAG, "onResponse: "+jsonObject.getString("email"));
+                        event.setTitle(jsonObject.getString("email"));
+                        event.setDate(new Date());
+                        //textResult += "Description: " + jsonObject.getString("email") + "\n";
+                        //textResult += "Price: " + jsonObject.getString("phone") + "\n\n";
                    // }
-                    title.setText(textResult);
+
+                    eventArrayList.add(event);
+                    eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -61,16 +76,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);*/
+        VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
 
-        try {
+        /*try {
             JSONObject test = new JSONObject(loadJSONFromRaw(R.raw.exemple));
             JSONArray jsonArray = test.getJSONArray("user");
             JSONObject obj = (JSONObject) jsonArray.get(0);
             title.setText(obj.getString("lastname"));
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
+    }
+
+    private void init() {
+        eventRecyclerView = (RecyclerView) findViewById(R.id.events_recycler_view);
+    }
+
+    private void toolbarInit(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     public String loadJSONFromRaw(int jsonPath) {

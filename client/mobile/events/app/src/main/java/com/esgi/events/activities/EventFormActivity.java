@@ -1,4 +1,4 @@
-package com.e.api.events.activities;
+package com.esgi.events.activities;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -6,7 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.e.api.events.R;
+import com.esgi.events.R;
+
 
 /**
  * Created by sylvainvincent on 16/01/16.
