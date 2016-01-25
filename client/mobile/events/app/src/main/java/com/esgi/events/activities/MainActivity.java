@@ -1,6 +1,8 @@
 package com.esgi.events.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-//                title.setText("Response: " + jsonObject.toString());
+        // title.setText("Response: " + jsonObject.toString());
                 String textResult = "";
                 try {
                     //JSONArray arrProducts = jsonObject.getJSONArray("products");
@@ -142,5 +145,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addEventAction(View view) {
+        startActivity(new Intent(this, EventFormActivity.class));
     }
 }
