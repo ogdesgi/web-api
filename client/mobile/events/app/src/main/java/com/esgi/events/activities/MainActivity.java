@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
     ArrayList<Event> eventArrayList ;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addEventAction(View view) {
+    public void actionToEventFormActivity(View view) {
         startActivity(new Intent(this, EventFormActivity.class));
     }
 }

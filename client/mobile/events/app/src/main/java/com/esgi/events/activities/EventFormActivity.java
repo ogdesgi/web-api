@@ -16,6 +16,7 @@ import com.esgi.events.R;
  */
 public class EventFormActivity extends AppCompatActivity {
 
+
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -36,4 +37,7 @@ public class EventFormActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    public void addEventAction(View view) {
+
+    }
 }
