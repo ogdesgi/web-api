@@ -45,6 +45,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         this.eventArrayList.addAll(eventArrayList);
         notifyDataSetChanged();
     }
+
     public void addItem(int position, Event event) {
         this.eventArrayList.add(position, event);
         notifyItemInserted(position);

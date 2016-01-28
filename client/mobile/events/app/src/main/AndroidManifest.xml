@@ -3,6 +3,7 @@
     package="com.esgi.events">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -25,6 +26,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".activities.EventFormActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".activities.EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>

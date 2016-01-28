@@ -1,9 +1,11 @@
 package com.esgi.events.models;
 
+import io.realm.RealmObject;
+
 /**
  * Created by sylvainvincent on 16/01/16.
  */
-public class User {
+public class User extends RealmObject {
 
     private String firstName;
     private String lastName;

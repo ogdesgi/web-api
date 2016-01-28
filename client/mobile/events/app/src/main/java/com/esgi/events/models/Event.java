@@ -2,16 +2,20 @@ package com.esgi.events.models;
 
 import java.util.Date;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
 /**
  * Created by sylvainvincent on 16/01/16.
  */
-public class Event {
+public class Event extends RealmObject {
 
     private String title;
     private String description;
     private String photoPath;
     private String author;
     private Date date;
+    private RealmList<User> participantsArrayList;
 
     public Event(){}
 
@@ -61,6 +65,14 @@ public class Event {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public RealmList<User> getParticipantsArrayList() {
+        return participantsArrayList;
+    }
+
+    public void setParticipantsArrayList(RealmList<User> participantsArrayList) {
+        this.participantsArrayList = participantsArrayList;
     }
 
     @Override
