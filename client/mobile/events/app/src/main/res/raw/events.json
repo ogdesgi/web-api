@@ -1,0 +1,58 @@
+{
+  "event": [
+    {
+      "title": "reunion d'information",
+      "description": "c'est cool",
+      "author": {
+        "name": "Alexandre",
+        "lastname": "Latour",
+        "email": "sylvain@gmail.com"
+      },
+      "date": "01/02/2016",
+      "photopath": "http://images.google.fr/imgres?imgurl=http%3A%2F%2Fwww.amaljob.com%2Fdonnees%2Fimages%2Farticles%2F22a8b9d953c3b0ccf183722601599243.jpg&imgrefurl=http%3A%2F%2Fwww.amaljob.com%2Factualite-conseils-emploi%2FCOMMENT-REUSSIR-UNE-REUNION-DE-TRAVAIL-A1135&h=1571&w=2356&tbnid=X1SIXBKVok5m0M%3A&docid=tSEM-4eeRkN5BM&ei=qtWaVqfPGczWUdXYuBg&tbm=isch&iact=rc&uact=3&dur=1399&page=1&start=0&ndsp=15&ved=0ahUKEwinzJ62wa_KAhVMaxQKHVUsDgMQrQMIQjAE",
+      "category": "reunion"
+    },
+    {
+      "title": "conférence de fou",
+      "description": "fou",
+      "author": {
+        "name": "Xavier",
+        "lastname": "Dubois",
+        "email": "sylvain@gmail.com"
+      },
+      "date": "10/02/2016",
+      "photopath": "http://images.google.fr/imgres?imgurl=http%3A%2F%2Fwww.amaljob.com%2Fdonnees%2Fimages%2Farticles%2F22a8b9d953c3b0ccf183722601599243.jpg&imgrefurl=http%3A%2F%2Fwww.amaljob.com%2Factualite-conseils-emploi%2FCOMMENT-REUSSIR-UNE-REUNION-DE-TRAVAIL-A1135&h=1571&w=2356&tbnid=X1SIXBKVok5m0M%3A&docid=tSEM-4eeRkN5BM&ei=qtWaVqfPGczWUdXYuBg&tbm=isch&iact=rc&uact=3&dur=1399&page=1&start=0&ndsp=15&ved=0ahUKEwinzJ62wa_KAhVMaxQKHVUsDgMQrQMIQjAE",
+      "category": "conférence"
+    },
+    {
+      "title": "Test",
+      "description": "test",
+      "author": {
+        "name": "Sylvain",
+        "lastname": "Vincent",
+        "email": "sylvain@gmail.com"
+      },
+      "date": "20/02/2016",
+      "photopath": "http://images.google.fr/imgres?imgurl=http%3A%2F%2Fwww.amaljob.com%2Fdonnees%2Fimages%2Farticles%2F22a8b9d953c3b0ccf183722601599243.jpg&imgrefurl=http%3A%2F%2Fwww.amaljob.com%2Factualite-conseils-emploi%2FCOMMENT-REUSSIR-UNE-REUNION-DE-TRAVAIL-A1135&h=1571&w=2356&tbnid=X1SIXBKVok5m0M%3A&docid=tSEM-4eeRkN5BM&ei=qtWaVqfPGczWUdXYuBg&tbm=isch&iact=rc&uact=3&dur=1399&page=1&start=0&ndsp=15&ved=0ahUKEwinzJ62wa_KAhVMaxQKHVUsDgMQrQMIQjAE",
+      "category": "speedmeeting",
+      "participant":[
+            {
+                "name": "Sylvain",
+                "lastname": "Vincent",
+                "email": "sylvain@gmail.com"
+            },
+            {
+                "name": "Xavier",
+                "lastname": "Dubois",
+                "email": "sylvain@gmail.com"
+            },
+            {
+                "name": "Alexandre",
+                "lastname": "Latour",
+                "email": "sylvain@gmail.com"
+            }
+        ]
+         
+    }
+  ]
+}

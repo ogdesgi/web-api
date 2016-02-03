@@ -1,0 +1,19 @@
+{
+  "user": [
+    {
+      "name": "Sylvain",
+      "lastname": "Vincent",
+      "email": "sylvain@gmail.com"
+    },
+      {
+      "name": "Xavier",
+      "lastname": "Dubois",
+      "email": "sylvain@gmail.com"
+    },
+      {
+      "name": "Alexandre",
+      "lastname": "Latour",
+      "email": "sylvain@gmail.com"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package com.esgi.events.webservice;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,19 +16,19 @@ public class OpenResaRetrofitRestClient {
     public OpenResaRetrofitRestClient(Context context) {
         Gson gson = new GsonBuilder().create();
 
-       /* RestAdapter restAdapter = new RestAdapter.Builder()
+        RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(context.getString(ENDPOINT))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                *//*.setLog(new RestAdapter.Log() {
+                 .setLog(new RestAdapter.Log() {
                     @Override
                     public void log(String message) {
                         Log.e("RestClient", "resquest: " + message);
                     }
-                })*//* //permet d'avoir le détail de la requête Retrofit dans les logs
+                }) //permet d'avoir le détail de la requête Retrofit dans les logs
                 .setConverter(new GsonConverter(gson))
                 .build();
 
-        mOpenResaServices = restAdapter.create(OpenResaServices.class);*/
+        mOpenResaServices = restAdapter.create(OpenResaServices.class);
 
     }
 }
