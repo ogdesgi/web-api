@@ -8,8 +8,15 @@ import io.realm.RealmObject;
  */
 public class Category extends RealmObject{
 
-    private String name;
+    private String label;
 
     public Category(){}
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }

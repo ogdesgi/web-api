@@ -31,7 +31,6 @@ import io.realm.Realm;
  */
 public class EventFormActivity extends AppCompatActivity {
 
-
     public static final int PICK_PICTURE_CODE = 1;
     private FloatingActionButton addPictureButton;
     private ImageView image;

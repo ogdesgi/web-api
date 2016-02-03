@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
+ * L'adapteur volley qui permet parser des requêtes Json grace à GSON
  * Created by sylvainvincent on 21/01/16.
  */
 public class GsonRequest<T> extends Request<T> {

@@ -21,6 +21,8 @@ import com.esgi.events.R;
 import com.esgi.events.adapters.EventsListAdapter;
 import com.esgi.events.helpers.VolleyHelper;
 import com.esgi.events.models.Event;
+import com.esgi.events.models.Repo;
+import com.esgi.events.webservice.GithubService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +32,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,13 +54,31 @@ public class MainActivity extends AppCompatActivity {
         this.toolbarInit();
         this.init();
 
-        String url="http://api.androidhive.info/volley/person_object.json";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com")
+                .build();
+
+        GithubService githubService = retrofit.create(GithubService.class);
+
+        Call<List<Repo>> repos = githubService.listRepos("octocat");
+
+        /*String url="http://api.androidhive.info/volley/person_object.json";
         eventArrayList = new ArrayList<>();
         final Event event = new Event();
         final Event event2 = new Event();
         final Event event3 = new Event();
+        JSONObject test = null;
 
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        try {
+            test = new JSONObject(loadJSONFromRaw(R.raw.exemple));
+            JSONArray jsonArray = test.getJSONArray("user");
+            JSONObject obj = (JSONObject) jsonArray.get(0);
+            title.setText(obj.getString("lastname"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
         // title.setText("Response: " + jsonObject.toString());
@@ -90,15 +116,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-
-        /*try {
-            JSONObject test = new JSONObject(loadJSONFromRaw(R.raw.exemple));
-            JSONArray jsonArray = test.getJSONArray("user");
-            JSONObject obj = (JSONObject) jsonArray.get(0);
-            title.setText(obj.getString("lastname"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
+*/
     }
 
     private void init() {

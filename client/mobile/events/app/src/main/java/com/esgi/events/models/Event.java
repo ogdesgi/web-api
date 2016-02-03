@@ -75,14 +75,5 @@ public class Event extends RealmObject {
         this.participantsArrayList = participantsArrayList;
     }
 
-    @Override
-    public String toString() {
-        return "event{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", photoPath='" + photoPath + '\'' +
-                ", author='" + author + '\'' +
-                ", date=" + date +
-                '}';
-    }
+
 }
