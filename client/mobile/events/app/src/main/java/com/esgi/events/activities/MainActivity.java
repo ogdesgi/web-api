@@ -22,7 +22,7 @@ import com.esgi.events.adapters.EventsListAdapter;
 import com.esgi.events.helpers.VolleyHelper;
 import com.esgi.events.models.Event;
 import com.esgi.events.models.Repo;
-import com.esgi.events.webservice.GithubService;
+import com.esgi.events.webservice.EventRestClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
         this.toolbarInit();
         this.init();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com")
-                .build();
+        EventRestClient eventRestClient = new EventRestClient(this);
+        try {
+            List<Event> events = eventRestClient.getEvents();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        GithubService githubService = retrofit.create(GithubService.class);
-
-        Call<List<Repo>> repos = githubService.listRepos("octocat");
 
         /*String url="http://api.androidhive.info/volley/person_object.json";
         eventArrayList = new ArrayList<>();

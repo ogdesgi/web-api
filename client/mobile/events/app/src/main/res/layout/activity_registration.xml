@@ -18,7 +18,16 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_login" />
+    <include layout="@layout/content_registration" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_picture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:src="@drawable/ic_action_camera"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
