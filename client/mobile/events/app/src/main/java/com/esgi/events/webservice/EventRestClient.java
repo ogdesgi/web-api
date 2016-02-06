@@ -1,13 +1,12 @@
 package com.esgi.events.webservice;
 
-import android.content.Context;
-
 import com.esgi.events.models.Event;
 
 import java.io.IOException;
 import java.util.List;
 
-import retrofit2.Retrofit;
+import retrofit.Retrofit;
+
 /**
  * Created by sylvainvincent on 03/02/16.
  */

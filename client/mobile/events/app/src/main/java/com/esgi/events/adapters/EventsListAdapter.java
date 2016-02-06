@@ -13,9 +13,7 @@ import com.esgi.events.helpers.FonctionsHelper;
 import com.esgi.events.models.Event;
 import com.squareup.picasso.Picasso;
 
-import java.net.ContentHandler;
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by sylvainvincent on 21/01/16.

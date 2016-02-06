@@ -2,7 +2,6 @@ package com.esgi.events.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,30 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.esgi.events.R;
 import com.esgi.events.adapters.EventsListAdapter;
-import com.esgi.events.helpers.VolleyHelper;
 import com.esgi.events.models.Event;
-import com.esgi.events.webservice.EventRestClient;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.esgi.events.models.Exemple;
+import com.esgi.events.webservice.ExempleRestClient;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
+import retrofit.Callback;
+import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,12 +41,35 @@ public class MainActivity extends AppCompatActivity {
         this.toolbarInit();
         this.init();
 
-        EventRestClient eventRestClient = new EventRestClient();
+        eventArrayList = new ArrayList<>();
+        ExempleRestClient exempleRestClient = new ExempleRestClient();
         try {
-            List<Event> events = eventRestClient.getEvents();
-        } catch (IOException e) {
+            exempleRestClient.getExemple("square", "retrofit", new Callback<List<Exemple>>() {
+                @Override
+                public void onResponse(retrofit.Response<List<Exemple>> response, Retrofit retrofit) {
+                    if (response.isSuccess()) {
+                        List<Exemple> exemples = response.body();
+                        for(Exemple exemple: exemples){
+                            eventArrayList.add(new Event(exemple.getLogin(),"http://www.wepeek.fr/wp-content/uploads/2015/08/Groupe-de-travail.jpg"));
+                        }
+                        eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList,MainActivity.this));
+                    } else {
+
+                        Log.e(TAG, "onResponse: non success" );
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(TAG, "onResponse: failure" );
+                }
+            });
+        }catch (Exception e){
             e.printStackTrace();
         }
+
+
 
 
         /*String url="http://api.androidhive.info/volley/person_object.json";

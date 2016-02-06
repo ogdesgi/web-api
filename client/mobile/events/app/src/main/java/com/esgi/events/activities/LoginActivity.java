@@ -14,10 +14,12 @@ import com.esgi.events.webservice.UserRestClient;
 import com.squareup.picasso.Downloader;
 
 import java.io.IOException;
+import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.realm.Realm;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by sylvainvincent on 25/01/16.
@@ -37,12 +39,19 @@ public class LoginActivity extends AppCompatActivity {
         toolbarInit();
 
         this.userCallback = new Callback<User>() {
+
             @Override
-            public void onResponse(Response<User> response) {
+            public void onResponse(Response<User> response, Retrofit retrofit) {
                 if(response.isSuccess()){
+                    Realm realm = Realm.getInstance(LoginActivity.this);
+                    realm.beginTransaction();
+
+                    User user = response.body();
+                    realm.copyToRealm(user);
+                    realm.commitTransaction();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }else{
-                 Log.e(TAG, "onResponse: no success " );
+                    Log.e(TAG, "onResponse: no success " );
                 }
             }
 
@@ -80,6 +89,8 @@ public class LoginActivity extends AppCompatActivity {
 
             UserRestClient userRestClient = new UserRestClient();
             userRestClient.getUser(emailField.getText().toString(), passwordField.getText().toString(), userCallback);
+        }else{
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
     }
 

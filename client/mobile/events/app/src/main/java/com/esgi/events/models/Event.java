@@ -19,6 +19,11 @@ public class Event extends RealmObject {
 
     public Event(){}
 
+    public Event(String title, String photoPath) {
+        this.title = title;
+        this.photoPath = photoPath;
+    }
+
     public Event(String title, String description, String photoPath, String author, Date date) {
         this.title = title;
         this.description = description;
