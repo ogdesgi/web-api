@@ -3,7 +3,10 @@ package com.esgi.events.webservice;
 import com.esgi.events.models.User;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -11,6 +14,10 @@ import retrofit2.http.Path;
  */
 public interface UserService {
 
-    @GET("/user/{userId}")
-    Call<User> getUser(@Path("userId") int userId);
+    @GET("/users/user")
+    Call<User> getUser(@Field("first_name") String email, @Field("last_name") String password);
+
+    @POST("/users/new")
+    Call<User> createUser(@Body User user);
+
 }

@@ -7,7 +7,6 @@ import com.esgi.events.models.Event;
 import java.io.IOException;
 import java.util.List;
 
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 /**
  * Created by sylvainvincent on 03/02/16.
@@ -18,10 +17,10 @@ public class EventRestClient {
 
     private String url = "https://api.github.com";
 
-    public EventRestClient(Context context) {
+    public EventRestClient() {
         eventService = new Retrofit.Builder()
                 .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
+               // .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(EventService.class);
     }

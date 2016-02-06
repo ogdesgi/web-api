@@ -21,7 +21,6 @@ import com.esgi.events.R;
 import com.esgi.events.adapters.EventsListAdapter;
 import com.esgi.events.helpers.VolleyHelper;
 import com.esgi.events.models.Event;
-import com.esgi.events.models.Repo;
 import com.esgi.events.webservice.EventRestClient;
 
 import org.json.JSONArray;
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         this.toolbarInit();
         this.init();
 
-        EventRestClient eventRestClient = new EventRestClient(this);
+        EventRestClient eventRestClient = new EventRestClient();
         try {
             List<Event> events = eventRestClient.getEvents();
         } catch (IOException e) {
