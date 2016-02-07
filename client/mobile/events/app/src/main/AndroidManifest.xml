@@ -31,6 +31,9 @@
         <activity android:name=".activities.EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".activities.RegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

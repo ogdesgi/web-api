@@ -44,13 +44,14 @@ public class MainActivity extends AppCompatActivity {
         eventArrayList = new ArrayList<>();
         ExempleRestClient exempleRestClient = new ExempleRestClient();
         try {
-            exempleRestClient.getExemple("square", "retrofit", new Callback<List<Exemple>>() {
+            exempleRestClient.getExemple("square", "picasso", new Callback<List<Exemple>>() {
                 @Override
                 public void onResponse(retrofit.Response<List<Exemple>> response, Retrofit retrofit) {
                     if (response.isSuccess()) {
+                        int i = 0;
                         List<Exemple> exemples = response.body();
                         for(Exemple exemple: exemples){
-                            eventArrayList.add(new Event(exemple.getLogin(),"http://www.wepeek.fr/wp-content/uploads/2015/08/Groupe-de-travail.jpg"));
+                            eventArrayList.add(new Event(exemple.getId(), exemple.getLogin(),exemple.getAvatar_url()));
                         }
                         eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                         eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList,MainActivity.this));

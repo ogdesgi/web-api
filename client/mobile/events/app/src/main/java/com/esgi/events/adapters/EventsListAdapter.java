@@ -1,6 +1,7 @@
 package com.esgi.events.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.esgi.events.R;
+import com.esgi.events.activities.EventDetailActivity;
+import com.esgi.events.activities.MainActivity;
+import com.esgi.events.activities.RegistrationActivity;
 import com.esgi.events.helpers.FonctionsHelper;
 import com.esgi.events.models.Event;
 import com.squareup.picasso.Picasso;
@@ -22,6 +26,8 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
     private ArrayList<Event> eventArrayList;
     private Context context;
+    public static final String PUT_EVENT_ID = "eventId";
+
 
     public EventsListAdapter(ArrayList<Event> eventArrayList, Context context){
         this.eventArrayList = eventArrayList;
@@ -67,16 +73,24 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             title = (TextView) itemView.findViewById(R.id.row_event_title);
             date = (TextView) itemView.findViewById(R.id.row_event_date);
             thumbnail = (ImageView) itemView.findViewById(R.id.row_event_thumbnail);
 
         }
 
-        public void bind(Event event, Context context){
+        public void bind(final Event event, final Context context){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, EventDetailActivity.class);
+                    intent.putExtra(PUT_EVENT_ID, event.getId());
+                    context.startActivity(new Intent(context, EventDetailActivity.class));
+                }
+            });
             title.setText(event.getTitle());
-            date.setText(FonctionsHelper.dateToString(event.getDate()));
+            date.setText(event.getId()+"");
+            //date.setText(FonctionsHelper.dateToString(event.getDate()));
             Picasso.with(context).load(event.getPhotoPath())
                     .resize(140,100)
                     .centerCrop()
