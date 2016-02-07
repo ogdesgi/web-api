@@ -2,34 +2,47 @@ package com.esgi.events.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.esgi.events.R;
+import com.esgi.events.adapters.EventsListAdapter;
 import com.esgi.events.models.Event;
+import com.squareup.picasso.Picasso;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmQuery;
 
 /**
  * Created by sylvainvincent on 27/01/16.
  */
 public class EventDetailActivity extends AppCompatActivity {
 
-    @Bind(R.id.event_title) private TextView title;
-    @Bind(R.id.event_date) private TextView date;
-    @Bind(R.id.event_description) private TextView description;
+    private ImageView eventCover;
+    private TextView eventTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
-        ButterKnife.bind(this);
-        Event event = new Event();
 
-        title.setText(event.getTitle().toString());
+        int eventId = getIntent().getIntExtra(EventsListAdapter.PUT_EVENT_ID, 0);
+
+        /*Realm realm = Realm.getInstance(this);
+        realm.beginTransaction();
+        Event event = realm.where(Event.class).equalTo("id", eventId).findFirst();
+        Picasso.with(this).load(event.getPhotoPath()).into(eventCover);
+        eventTitle.setText(event.getTitle());*/
+
+        /*title.setText(event.getTitle().toString());
         date.setText(event.getDate().toString());
-        description.setText(event.getDescription());
+        description.setText(event.getDescription());*/
 
+    }
+
+    private void init(){
+        eventCover = (ImageView) findViewById(R.id.event_picture);
+        eventTitle = (TextView) findViewById(R.id.event_title);
     }
 
 }
