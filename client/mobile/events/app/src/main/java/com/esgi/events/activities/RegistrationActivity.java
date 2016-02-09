@@ -11,6 +11,10 @@ import android.widget.TextView;
 import com.esgi.events.R;
 import com.esgi.events.models.User;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 /**
  * Created by sylvainvincent on 04/02/16.
@@ -18,7 +22,7 @@ import com.esgi.events.models.User;
 public class RegistrationActivity extends AppCompatActivity {
 
 
-    /*@Bind(R.id.app_bar_layout)
+    @Bind(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
     @Bind(R.id.title)
     TextView title;
@@ -31,17 +35,17 @@ public class RegistrationActivity extends AppCompatActivity {
     @Bind(R.id.password_field)
     EditText passwordField;
     @Bind(R.id.registration_coordinator)
-    CoordinatorLayout registrationCoordinator;*/
+    CoordinatorLayout registrationCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        //ButterKnife.bind(this);
+        ButterKnife.bind(this);
 
     }
 
- /*   @OnClick(R.id.subscribe_button)
+    @OnClick(R.id.subscribe_button)
     public void onClick() {
         if(isValid()){
             User user = new User();
@@ -64,5 +68,5 @@ public class RegistrationActivity extends AppCompatActivity {
             Snackbar.make(registrationCoordinator,"Tous les champs sont obligatoires",Snackbar.LENGTH_LONG).show();
         }
         return isValid;
-    }*/
+    }
 }
