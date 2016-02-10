@@ -2,11 +2,8 @@ package com.esgi.events.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +16,6 @@ import android.widget.ImageView;
 import com.esgi.events.R;
 import com.esgi.events.models.Event;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -126,7 +122,7 @@ public class EventFormActivity extends AppCompatActivity {
         event.setTitle(title);
         event.setDescription(description);
         event.setDate(date);
-        event.setPhotoPath(photoPath);
+        event.setLogo(photoPath);
 
         realm.commitTransaction();
     }

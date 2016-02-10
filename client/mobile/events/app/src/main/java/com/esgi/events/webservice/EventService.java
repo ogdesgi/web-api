@@ -20,7 +20,7 @@ public interface EventService {
     @POST("/event/new")
     Call<Event> makeEvent (@Body Event event);
 
-    @GET("/event/all")
+    @GET("/myeventmanager/events")
     Call<List<Event>> getAllEvent();
 
 }

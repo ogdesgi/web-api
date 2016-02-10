@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.esgi.events.R;
 import com.esgi.events.activities.EventDetailActivity;
-import com.esgi.events.activities.MainActivity;
-import com.esgi.events.activities.RegistrationActivity;
-import com.esgi.events.helpers.FonctionsHelper;
 import com.esgi.events.models.Event;
 import com.squareup.picasso.Picasso;
 
@@ -91,7 +88,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
             title.setText(event.getTitle());
             date.setText(event.getId()+"");
             //date.setText(FonctionsHelper.dateToString(event.getDate()));
-            Picasso.with(context).load(event.getPhotoPath())
+            Picasso.with(context).load(event.getLogo())
                     .resize(140,100)
                     .centerCrop()
                     .placeholder(R.drawable.ic_image_panorama)

@@ -31,7 +31,7 @@ public class EventDetailActivity extends AppCompatActivity {
         /*Realm realm = Realm.getInstance(this);
         realm.beginTransaction();
         Event event = realm.where(Event.class).equalTo("id", eventId).findFirst();
-        Picasso.with(this).load(event.getPhotoPath()).into(eventCover);
+        Picasso.with(this).load(event.getLogo()).into(eventCover);
         eventTitle.setText(event.getTitle());*/
 
         /*title.setText(event.getTitle().toString());

@@ -21,7 +21,6 @@ import butterknife.OnClick;
  */
 public class RegistrationActivity extends AppCompatActivity {
 
-
     @Bind(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
     @Bind(R.id.title)

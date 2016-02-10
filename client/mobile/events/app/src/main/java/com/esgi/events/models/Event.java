@@ -2,6 +2,7 @@ package com.esgi.events.models;
 
 import java.util.Date;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
@@ -13,25 +14,27 @@ public class Event extends RealmObject {
     private int id;
     private String title;
     private String description;
-    private String photoPath;
-    private String author;
+    private String logo;
+    private User creator;
     private Date date;
-    private RealmList<User> participantsArrayList;
+    private RealmList<User> participants;
 
     public Event(){}
 
-    public Event(int id, String title, String photoPath) {
+    public Event(int id, String title, String logo) {
         this.id = id;
         this.title = title;
-        this.photoPath = photoPath;
+        this.logo = logo;
     }
 
-    public Event(String title, String description, String photoPath, String author, Date date) {
+    public Event(int id, String title, String description, String photoPath, User creator, Date date, RealmList<User> participants) {
+        this.id = id;
         this.title = title;
         this.description = description;
-        this.photoPath = photoPath;
-        this.author = author;
+        this.logo = photoPath;
+        this.creator = creator;
         this.date = date;
+        this.participants = participants;
     }
 
     public int getId() {
@@ -58,20 +61,20 @@ public class Event extends RealmObject {
         this.description = description;
     }
 
-    public String getPhotoPath() {
-        return photoPath;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
-    public String getAuthor() {
-        return author;
+    public User getAuthor() {
+        return creator;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     public Date getDate() {
@@ -82,12 +85,12 @@ public class Event extends RealmObject {
         this.date = date;
     }
 
-    public RealmList<User> getParticipantsArrayList() {
-        return participantsArrayList;
+    public RealmList<User> getParticipants() {
+        return participants;
     }
 
-    public void setParticipantsArrayList(RealmList<User> participantsArrayList) {
-        this.participantsArrayList = participantsArrayList;
+    public void setParticipants(RealmList<User> participants) {
+        this.participants = participants;
     }
 
 
