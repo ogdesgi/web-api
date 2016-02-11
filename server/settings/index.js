@@ -1,11 +1,5 @@
-var yargs = require('yargs');
+// Index file to redirect settings
 
-module.exports = function(app){
-	var DEFAULT_ENV = 'dev';
-	var env = yargs
-		.alias('e', 'env')
-		.argv
-		.env || DEFAULT_ENV;
-
-	app.settings = require('./' + env);
+module.exports = function(app) {
+	app.settings = require('./settings');
 };
