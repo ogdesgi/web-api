@@ -1,5 +1,5 @@
 /* Retrieve user script
-* Shows a user in the database.
+* Shows a user in the database
 * 
 * Access route: GET /myeventmanager/users/{user_id}
 * Middlewares used: NONE

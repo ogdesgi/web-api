@@ -1,12 +1,12 @@
 /* Event model
 * Represents an event
-*		title: the event designation
-*		description: a quick presentation of the event
-*		date: the date the event will be held
-*		logo: an image associated with the event
-*		creator: the User in charge of the event
-*		category: the Category of the event
-*		participants: the list of Users who have joined the event
+*	title: the event designation
+*	description: a quick presentation of the event
+*	date: the date the event will be held
+*	logo: an image associated with the event
+*	creator: the User in charge of the event
+*	category: the Category of the event
+*	participants: the list of Users who have joined the event
 */
 
 module.exports = function(app) {

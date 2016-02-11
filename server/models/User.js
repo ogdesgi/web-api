@@ -1,9 +1,9 @@
 /* User model
 * Represents a user
-*		firstname: the user's surname
-*		lastname: the user's family name
-*		email: the user's email address
-*		password: the user's password
+*	firstname: the user's surname
+*	lastname: the user's family name
+*	email: the user's email address
+*	password: the user's password
 *
 * NOTE: For security purposes, the user password is encrypted in the database
 *

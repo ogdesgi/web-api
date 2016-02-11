@@ -1,5 +1,5 @@
 /* Retrieve category script
-* Shows a category from the database.
+* Shows a category from the database
 * 
 * Access route: GET /myeventmanager/categories/{cat_id}
 * Middlewares used: NONE

@@ -1,5 +1,5 @@
 /* List categories script
-* Shows all categories in the database.
+* Shows all categories in the database
 * 
 * Access route: GET /myeventmanager/categories
 * Middlewares used: NONE

@@ -1,5 +1,5 @@
 /* List events script
-* Shows all events in the database.
+* Shows all events in the database
 * 
 * Access route: GET /myeventmanager/events
 * Middlewares used: NONE

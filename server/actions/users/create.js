@@ -15,10 +15,10 @@ module.exports = function(app) {
 		
 		var User = app.models.User;
 		
-		// Is another already subscribed with this email?
+		// Is another user already subscribed with this email?
 		User.findOne({email: body.email}, function(err, found) {
 			if(err)
-				return res.status(500).json({success: false, error: 'Internal server error'}); // Internal Server Error
+				return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
 			if(found)
 				return res.status(403).json({success: false, error: 'Email already in use'}); // 403 Forbidden
 			

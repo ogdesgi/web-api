@@ -1,5 +1,5 @@
 /* Update category script
-* Edits a category in the database.
+* Edits a category in the database
 * 
 * Access route: PUT /myeventmanager/category/{cat_id}
 * Middlewares used: authenticated (checks if user is logged in)

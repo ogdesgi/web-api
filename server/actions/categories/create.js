@@ -1,5 +1,5 @@
 /* Create category script
-* Creates a new category, shared among all registered users.
+* Creates a new category, shared among all registered users
 *
 * Access route: POST /myeventmanager/categories
 * Middlewares used: authenticated (checks if user is logged in)

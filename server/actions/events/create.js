@@ -1,6 +1,6 @@
 /* Create event script
-* Creates a new event, linked to a category and a user.
-* When created, its creator automatically counts as a participant.
+* Creates a new event, linked to a category and a user
+* When created, its creator automatically counts as a participant
 *
 * Access route: POST /myeventmanager/events
 * Middlewares used: authenticated (checks if user is logged in)
@@ -35,6 +35,9 @@ module.exports = function(app) {
 					category: cat,
 					participants: [req.user]
 				});
+
+				if(body.date)
+					event.date = body.date;
 				
 				if(req.file)
 					event.logo = req.file.filename;

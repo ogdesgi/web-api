@@ -1,6 +1,6 @@
 /* Update event script
-* Edits an event in the database. 
-* Only its title, description, date and logo are editable.
+* Edits an event in the database
+* Only its title, description, date and logo are editable
 * 
 * Access route: PUT /myeventmanager/events/{evt_id}
 * Middlewares used: authenticated (checks if user is logged in)

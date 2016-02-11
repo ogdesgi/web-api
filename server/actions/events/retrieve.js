@@ -1,5 +1,5 @@
 /* Retrieve event script
-* Shows an event from the database.
+* Shows an event from the database
 * 
 * Access route: GET /myeventmanager/events/{evt_id}
 * Middlewares used: NONE

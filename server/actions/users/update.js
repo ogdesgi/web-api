@@ -1,5 +1,6 @@
 /* Update user script
-* Edits a user's profile in the database.
+* Edits a user's profile in the database
+* Only the user themselves can do it
 * 
 * Access route: PUT /myeventmanager/users/{user_id}
 * Middlewares used: authenticated (checks if user is logged in)

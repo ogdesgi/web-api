@@ -1,6 +1,6 @@
 /* Delete event script
-* Removes an event from the database.
-* The event's creator is the only one able to do it.
+* Removes an event from the database
+* Only the event's creator can do it
 * 
 * Access route: DELETE /myeventmanager/event/{evt_id}
 * Middlewares used: authenticated (checks if user is logged in)

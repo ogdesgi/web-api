@@ -1,6 +1,6 @@
 /* Category model
 * Represents the category of an event
-*		name: name of the category
+*	name: name of the category
 */
 
 module.exports = function(app) {

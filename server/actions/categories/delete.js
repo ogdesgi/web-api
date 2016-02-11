@@ -1,5 +1,5 @@
 /* Delete category script
-* Removes a category from the database.
+* Removes a category from the database
 * 
 * Access route: DELETE /myeventmanager/categories/{cat_id}
 * Middlewares used: authenticated (checks if user is logged in)

@@ -1,5 +1,6 @@
 /* Join script
-* Adds a participant to an event.
+* Adds a participant to an event
+* Upon creation, an event only has one participant: its creator
 *
 * Access route: POST /myeventmanager/events/{evt_id}/join
 * Middlewares used: authenticated (checks if user is logged in)

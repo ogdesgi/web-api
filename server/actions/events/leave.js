@@ -1,5 +1,6 @@
 /* Leave script
-* Removes a participant from an event.
+* Removes a participant from an event
+* The event's creator cannot leave their own event
 *
 * Access route: POST /myeventmanager/events/{evt_id}/leave
 * Middlewares used: authenticated (checks if user is logged in)
