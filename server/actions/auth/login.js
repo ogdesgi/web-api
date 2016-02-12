@@ -1,17 +1,41 @@
-module.exports = function(app){
-    return function(req, res, next){
-        app.models.User.findOne({
-            username: req.body.username,
-            password: req.body.password
-        }, function(err, instance){
-            if(err)
-                return res.status(500).send(err);
+/* Login script
+* Gives the user a 1-hour access token if they are registered in the database.
+* A valid token must be used to create, modify or delete categories and events.
+* 
+*
+* Access route : POST /myeventmanager/auth/login
+* Middlewares used : NONE
+* Nodes implemented : jsonwebtoken (handles token creation)
+*/
 
-            if(!instance)
-                return res.status(404).send('account not found.');
+var jwt = require('jsonwebtoken');
 
-            req.session.userId = instance.id;
-            res.send(instance);
-        })
-    };
+module.exports = function(app) {
+	return function(req, res, next) {
+		if(!req.body || 
+		   !req.body.email || !req.body.password)
+		   return res.status(400).json({success: false, error: 'Missing fields are required'}); // 400 Bad Request
+		var body = req.body;
+		
+		var settings = app.settings;
+		
+		var User = app.models.User;
+		
+		// Check user registration and password validity
+		User.findOne({email: body.email}, function(err, user) {
+			if(err || !user)
+				return res.status(404).json({success: false, error: 'Invalid email'}); // 404 Not Found
+			
+			var encPass = User.encryptPassword(body.password);
+			user.verifyPassword(encPass, function(err, goodPass) {
+				if(err || !goodPass)
+					return res.status(404).json({success: false, error: 'Invalid password'});
+				
+				// If user was found, then apply token on user ID, expires in 1 hour
+				var token = jwt.sign({_id: user._id}, settings.tokenSecret, {expiresIn: settings.tokenTTL});
+				
+				res.status(200).json({success: true, token: token, expires: settings.tokenTTL, id: user._id}); // 200 OK
+			});
+		});
+	};
 };

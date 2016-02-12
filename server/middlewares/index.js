@@ -1,10 +1,7 @@
-var cookieParser = require('cookie-parser');
+// Index file to redirect middlewares scripts
 
 module.exports = function(app) {
-	app.use(cookieParser());
-
-	require('./session')(app);
-	require('./authenticated')(app);
-	require('./upload')(app);
-	require('./secure')(app);
+	app.middlewares = {
+		authenticated: require('./authenticated')(app)
+	};
 };
