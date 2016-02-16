@@ -2,10 +2,15 @@ package com.esgi.events.webservice;
 
 import com.esgi.events.models.User;
 
+import junit.framework.Test;
+
 import retrofit.Call;
+import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 
 /**
@@ -13,10 +18,13 @@ import retrofit.http.POST;
  */
 public interface UserService {
 
-    @GET("/users/user")
-    Call<User> getUser(@Field("first_name") String email, @Field("last_name") String password);
+    @Headers("Content-Type: application/json")
+    @POST("/myeventmanager/auth/login")
+    Call<com.esgi.events.models.Test> toLogin(@Body User user);
 
-    @POST("/users/new")
-    Call<User> createUser(@Body User user);
+    @Headers("Content-Type: application/json")
+    @POST("/myeventmanager/users")
+    Call<User> toSubscribe(@Body User user);
 
 }
+

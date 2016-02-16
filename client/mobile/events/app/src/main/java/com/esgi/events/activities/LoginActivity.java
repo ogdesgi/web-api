@@ -2,20 +2,25 @@ package com.esgi.events.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.esgi.events.R;
 import com.esgi.events.models.User;
 import com.esgi.events.webservice.UserRestClient;
-import com.squareup.picasso.Downloader;
+
+import junit.framework.Test;
 
 import java.io.IOException;
-import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import retrofit.Callback;
 import retrofit.Response;
@@ -27,53 +32,62 @@ import retrofit.Retrofit;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private Callback<User> userCallback;
-    private EditText emailField,
-                     passwordField;
+    @Bind(R.id.test)
+    TextView test;
+    @Bind(R.id.email_field)
+    EditText emailField;
+    @Bind(R.id.password_field)
+    EditText passwordField;
+    @Bind(R.id.coordinator_login)
+    CoordinatorLayout coordinatorLogin;
+    private Callback<com.esgi.events.models.Test> userCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        init();
+        ButterKnife.bind(this);
         toolbarInit();
 
-        this.userCallback = new Callback<User>() {
+        this.userCallback = new Callback<com.esgi.events.models.Test>() {
 
             @Override
-            public void onResponse(Response<User> response, Retrofit retrofit) {
-                if(response.isSuccess()){
-                    Realm realm = Realm.getInstance(LoginActivity.this);
-                    realm.beginTransaction();
+            public void onResponse(Response<com.esgi.events.models.Test> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
 
-                    User user = response.body();
-                    realm.copyToRealm(user);
-                    realm.commitTransaction();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }else{
-                    Log.e(TAG, "onResponse: no success " );
+                    //Realm realm = Realm.getInstance(LoginActivity.this);
+                   // realm.beginTransaction();
+
+                    com.esgi.events.models.Test test = response.body();
+                   /* realm.copyToRealm(test);
+                    realm.commitTransaction();*/
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("token",test.getToken());
+                    startActivity(intent);
+                } else {
+                    Snackbar.make(coordinatorLogin, "Identifiant/mot de passe incorrect", Snackbar.LENGTH_LONG).show();
+                    Log.e(TAG, "onResponse: no success body " + response.body());
+                    Log.e(TAG, "onResponse: no success errorbody " + response.errorBody());
+                    Log.e(TAG, "onResponse: no success raw body " + response.raw().body());
+                    Log.e(TAG, "onResponse: no success message " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e(TAG, "onResponse: fail " );
+                t.printStackTrace();
+                Snackbar.make(coordinatorLogin, "Serveur indisponible", Snackbar.LENGTH_LONG).show();
+                Log.e(TAG, "onResponse: fail ");
             }
         };
     }
 
-    private void init(){
-        emailField = (EditText) findViewById(R.id.email_field);
-        passwordField = (EditText) findViewById(R.id.password_field);
-
-    }
-
-    private void toolbarInit(){
+    private void toolbarInit() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
-    private boolean isValide(){
+    private boolean isValide() {
         boolean bool = false;
 
         if (!(emailField.getText().toString().equals("") && passwordField.getText().toString().equals(""))) {
@@ -83,19 +97,22 @@ public class LoginActivity extends AppCompatActivity {
         return bool;
     }
 
-    public void loginAction(View view) throws IOException {
-
-        if(isValide()){
-
-            UserRestClient userRestClient = new UserRestClient();
-            userRestClient.getUser(emailField.getText().toString(), passwordField.getText().toString(), userCallback);
-        }else{
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        }
-    }
-
 
     public void registrationAction(View view) {
         startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+    }
+
+    public void loginAction(View view) {
+
+        if (isValide()) {
+
+            UserRestClient userRestClient = new UserRestClient();
+
+            userRestClient.toLogin(emailField.getText().toString(), passwordField.getText().toString()).enqueue(userCallback);
+
+        } else {
+            Snackbar.make(coordinatorLogin, "Veuillez remplir tous les champs", Snackbar.LENGTH_LONG).show();
+        }
+
     }
 }

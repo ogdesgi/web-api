@@ -10,16 +10,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.esgi.events.R;
+import com.esgi.events.models.Category;
 import com.esgi.events.models.Event;
+import com.esgi.events.models.User;
+import com.esgi.events.webservice.CategoryRestClient;
+import com.esgi.events.webservice.EventRestClient;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import io.realm.Realm;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 /**
@@ -33,7 +44,9 @@ public class EventFormActivity extends AppCompatActivity {
     private EditText titleField,
                      dateField,
                      descriptionField;
+    private Spinner categoryEventSpinner;
     private Uri uri;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +54,44 @@ public class EventFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_form);
         init();
         toolbarInit();
-        Log.e("e", "onCreate: ok");
+        token = getIntent().getStringExtra("token");
+
+
+        Call<List<Category>> call = null;
+        Response<List<Category>> response = null;
+        try {
+            call = new CategoryRestClient().getCategories();
+            call.enqueue(new Callback<List<Category>>() {
+                @Override
+                public void onResponse(Response<List<Category>> response, Retrofit retrofit) {
+                    if(response.isSuccess()){
+
+                        List<Category> list = response.body();
+                        List<String> categoriesNames = null;
+                        categoriesNames.add("Créer une nouvelle catégorie");
+                        categoriesNames.add("Créer une nouvelle catégorie");
+                        for(Category category :list){
+                            categoriesNames.add(category.getName());
+                        }
+                        ArrayAdapter<String> arrayAdapter =new ArrayAdapter<>(EventFormActivity.this,android.R.layout.activity_list_item,categoriesNames);
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        categoryEventSpinner.setAdapter(arrayAdapter);
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e("fail", "onFailure: "+t.getMessage());
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
     }
 
     @Override
@@ -65,6 +115,7 @@ public class EventFormActivity extends AppCompatActivity {
         dateField = (EditText) findViewById(R.id.date_edit_text);
         descriptionField = (EditText) findViewById(R.id.description_edit_text);
         image = (ImageView) findViewById(R.id.event_picture);
+        categoryEventSpinner = (Spinner) findViewById(R.id.category_spinner);
     }
 
     private void toolbarInit(){
@@ -79,11 +130,13 @@ public class EventFormActivity extends AppCompatActivity {
                         descriptionField.getText().toString().equals("") &&
                         dateField.getText().toString().equals(""))) {
                     Event event = new Event();
-                    createEvent(titleField.getText().toString(),
-                            descriptionField.getText().toString(),
-                            new Date(),
-                            uri.getPath());
-                            setResult(RESULT_OK);
+                    event.setTitle(titleField.getText().toString());
+                    event.setDescription(descriptionField.getText().toString());
+                    event.setDate(new Date());
+                    event.setCreator(new User());
+                    EventRestClient eventRestClient = new EventRestClient();
+                    eventRestClient.createEvents(token, event);
+                    setResult(RESULT_OK);
                     finish();
                 }
                 break;
@@ -113,7 +166,7 @@ public class EventFormActivity extends AppCompatActivity {
         return file;
     }*/
 
-    private void createEvent(String title, String description, Date date,String photoPath){
+    /*private void createEvent(String title, String description, Date date,String photoPath){
         Realm realm = Realm.getInstance(this);
 
         realm.beginTransaction();
@@ -125,5 +178,5 @@ public class EventFormActivity extends AppCompatActivity {
         event.setLogo(photoPath);
 
         realm.commitTransaction();
-    }
+    }*/
 }

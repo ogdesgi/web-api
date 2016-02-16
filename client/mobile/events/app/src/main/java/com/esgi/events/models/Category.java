@@ -6,17 +6,17 @@ import io.realm.RealmObject;
 /**
  * Created by sylvainvincent on 17/01/16.
  */
-public class Category extends RealmObject{
+public class Category{
 
-    private String label;
+    private String name;
 
     public Category(){}
 
-    public String getLabel() {
-        return label;
+    public String getName() {
+        return name;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setName(String name) {
+        this.name = name;
     }
 }

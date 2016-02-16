@@ -2,6 +2,7 @@ package com.esgi.events.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,15 +16,14 @@ import android.widget.TextView;
 import com.esgi.events.R;
 import com.esgi.events.adapters.EventsListAdapter;
 import com.esgi.events.models.Event;
-import com.esgi.events.models.Exemple;
 import com.esgi.events.webservice.EventRestClient;
-import com.esgi.events.webservice.ExempleRestClient;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Retrofit;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView title;
     private final String TAG = getClass().getSimpleName();
     ArrayList<Event> eventArrayList ;
-
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,56 +41,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.toolbarInit();
         this.init();
-
+        token = getIntent().getStringExtra("token");
         eventArrayList = new ArrayList<>();
-        /*ExempleRestClient exempleRestClient = new ExempleRestClient();
-        try {
-            exempleRestClient.getExemple("square", "picasso", new Callback<List<Exemple>>() {
-                @Override
-                public void onResponse(retrofit.Response<List<Exemple>> response, Retrofit retrofit) {
-                    if (response.isSuccess()) {
-                        List<Exemple> exemples = response.body();
-                        for(Exemple exemple: exemples){
-                            eventArrayList.add(new Event(exemple.getId(), exemple.getLogin(),exemple.getAvatar_url()));
-                        }
-                        eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                        eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList,MainActivity.this));
-                    } else {
-
-                        Log.e(TAG, "onResponse: non success" );
-                    }
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.e(TAG, "onResponse: failure" );
-                }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
 
         EventRestClient eventRestClient = new EventRestClient();
         try {
-            eventRestClient.getEvents(new Callback<List<Event>>() {
+            Call<List<Event>> listCall = eventRestClient.getEvents();
+            listCall.enqueue(new Callback<List<Event>>() {
                 @Override
                 public void onResponse(retrofit.Response<List<Event>> response, Retrofit retrofit) {
                     if (response.isSuccess()) {
                         List<Event> eventList = response.body();
                         for (Event event : eventList) {
-                            eventArrayList.add(new Event(event.getId(), event.getTitle(), event.getDescription(), event.getLogo(), event.getAuthor(), event.getDate(), event.getParticipantsArrayList()));
+                            eventArrayList.add(new Event(event.getId(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreator(), event.getDate()));
                         }
                         eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                         eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList, MainActivity.this));
                     } else {
 
-                        Log.e(TAG, "onResponse: non success");
+                        Log.e(TAG, "onResponse: non success ");
                     }
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
-                    Log.e(TAG, "onResponse: failure");
+                    Log.e(TAG, "onResponse: failure " + t.getMessage());
+                    t.printStackTrace();
                 }
             });
         }catch (Exception e){
@@ -131,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void actionToEventFormActivity(View view) {
-        startActivity(new Intent(this, EventFormActivity.class));
+        Intent intent = new Intent(this, EventFormActivity.class);
+        intent.putExtra("token",token);
+        startActivity(intent);
     }
 }
