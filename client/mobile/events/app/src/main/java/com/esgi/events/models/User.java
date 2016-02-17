@@ -14,6 +14,13 @@ public class User{
     private String password;
     private String token;
 
+    public User() {
+    }
+
+    public User(String id){
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

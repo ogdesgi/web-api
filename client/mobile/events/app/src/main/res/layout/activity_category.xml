@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main_coordinator"
+    android:id="@+id/coordinator_category"
     android:fitsSystemWindows="true"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.CategoriesActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,17 +20,17 @@
 
     <include
         android:layout_marginTop="60dp"
-        layout="@layout/content_main"
+        layout="@layout/content_category"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/event_form_fab"
+        android:id="@+id/category_form_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:onClick="actionToEventFormActivity"
+        android:onClick="actionAddCategory"
         android:src="@drawable/ic_add" />
 
 </android.support.design.widget.CoordinatorLayout>

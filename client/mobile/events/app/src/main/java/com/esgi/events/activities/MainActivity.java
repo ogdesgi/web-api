@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.esgi.events.R;
 import com.esgi.events.adapters.EventsListAdapter;
 import com.esgi.events.models.Event;
+import com.esgi.events.models.Events;
 import com.esgi.events.webservice.EventRestClient;
+import com.esgi.events.webservice.EventService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +27,7 @@ import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
+import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
     ArrayList<Event> eventArrayList ;
     private String token;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,36 +46,34 @@ public class MainActivity extends AppCompatActivity {
         this.toolbarInit();
         this.init();
         token = getIntent().getStringExtra("token");
+        userId = getIntent().getStringExtra("userId");
         eventArrayList = new ArrayList<>();
 
         EventRestClient eventRestClient = new EventRestClient();
-        try {
-            Call<List<Event>> listCall = eventRestClient.getEvents();
-            listCall.enqueue(new Callback<List<Event>>() {
-                @Override
-                public void onResponse(retrofit.Response<List<Event>> response, Retrofit retrofit) {
-                    if (response.isSuccess()) {
-                        List<Event> eventList = response.body();
-                        for (Event event : eventList) {
-                            eventArrayList.add(new Event(event.getId(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreator(), event.getDate()));
-                        }
-                        eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                        eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList, MainActivity.this));
-                    } else {
+        Call<Events> call = eventRestClient.getEvents();
 
-                        Log.e(TAG, "onResponse: non success ");
+        call.enqueue(new Callback<Events>() {
+            @Override
+            public void onResponse(retrofit.Response<Events> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    Events eventList = response.body();
+                    for (Event event : eventList.getEventList()) {
+                        eventArrayList.add(new Event(event.getId(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreator(), event.getDate()));
                     }
-                }
+                    eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList, MainActivity.this));
+                } else {
 
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.e(TAG, "onResponse: failure " + t.getMessage());
-                    t.printStackTrace();
+                    Log.e(TAG, "onResponse: non success ");
                 }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "onResponse: failure " + t);
+                t.printStackTrace();
+            }
+        });
 
     }
 
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     public void actionToEventFormActivity(View view) {
         Intent intent = new Intent(this, EventFormActivity.class);
         intent.putExtra("token",token);
+        intent.putExtra("userId",userId);
         startActivity(intent);
     }
 }

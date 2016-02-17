@@ -2,6 +2,7 @@ package com.esgi.events.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -19,7 +20,7 @@ public class Event {
     private User creator;
     private Category category;
     private Date date;
-    private ArrayList<User> participants;
+    private List<User> participants;
 
     public Event(){}
 
@@ -112,11 +113,25 @@ public class Event {
         this.category = category;
     }
 
-    public ArrayList<User> getParticipants() {
+    public List<User> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(ArrayList<User> participants) {
+    public void setParticipants(List<User> participants) {
         this.participants = participants;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", logo='" + logo + '\'' +
+                ", creator=" + creator +
+                ", category=" + category +
+                ", date=" + date +
+                ", participants=" + participants +
+                '}';
     }
 }

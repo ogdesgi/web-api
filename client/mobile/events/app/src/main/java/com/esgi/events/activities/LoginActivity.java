@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     realm.commitTransaction();*/
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("token",test.getToken());
+                    intent.putExtra("userId",test.getId());
                     startActivity(intent);
                 } else {
                     Snackbar.make(coordinatorLogin, "Identifiant/mot de passe incorrect", Snackbar.LENGTH_LONG).show();

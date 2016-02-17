@@ -1,8 +1,11 @@
 package com.esgi.events.webservice;
 
 import com.esgi.events.models.Event;
+import com.esgi.events.models.Events;
+import com.esgi.events.models.Test;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
@@ -24,7 +27,6 @@ public class EventRestClient {
 
     public EventRestClient() {
 
-
         eventService = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -32,11 +34,11 @@ public class EventRestClient {
                 .create(EventService.class);
     }
 
-    public Call<List<Event>> getEvents(){
+    public Call<Events> getEvents(){
         return eventService.getEvents();
     }
 
-    public void createEvents(String token, Event event){
-        eventService.makeEvent("Bearer "+ token, event);
+    public Call<Event> createEvents(String token, RequestBody file, Event event){
+        return eventService.makeEvent("Bearer " + token, file, event.getTitle(), event.getDescription(), event.getCategory().get_id());
     }
 }

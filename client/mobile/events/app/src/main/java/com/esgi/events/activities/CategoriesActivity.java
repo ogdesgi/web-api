@@ -1,0 +1,75 @@
+package com.esgi.events.activities;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+
+import com.esgi.events.R;
+import com.esgi.events.adapters.CategoryListAdapter;
+import com.esgi.events.adapters.EventsListAdapter;
+import com.esgi.events.models.Categories;
+import com.esgi.events.models.Category;
+import com.esgi.events.models.Event;
+import com.esgi.events.webservice.CategoryRestClient;
+import com.esgi.events.webservice.EventRestClient;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Retrofit;
+
+/**
+ * Created by sylvainvincent on 16/02/16.
+ */
+public class CategoriesActivity extends AppCompatActivity {
+
+    private static final String TAG = "CategoriesActivity";
+    
+    private String token;
+    private Categories categoryList;
+    private RecyclerView categoryRecyclerView;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_category);
+        categoryRecyclerView = (RecyclerView) findViewById(R.id.category_recycler_view);
+        token = getIntent().getStringExtra("token");
+
+
+        CategoryRestClient categoryRestClient = new CategoryRestClient();
+        Call<Categories> call = categoryRestClient.getCategories();
+
+        call.enqueue(new Callback<Categories>() {
+            @Override
+            public void onResponse(retrofit.Response<Categories> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    categoryList = response.body();
+                    categoryRecyclerView.setLayoutManager(new LinearLayoutManager(CategoriesActivity.this));
+                    categoryRecyclerView.setAdapter(new CategoryListAdapter(categoryList.getCategoryList(), CategoriesActivity.this, token));
+                } else {
+
+                    Log.e(TAG, "onResponse: non success ");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "onResponse: failure " + t);
+                t.printStackTrace();
+            }
+        });
+
+    }
+
+    public void actionAddCategory(View view){
+        startActivity(new Intent(this, CategoryFormActivity.class));
+    }
+}

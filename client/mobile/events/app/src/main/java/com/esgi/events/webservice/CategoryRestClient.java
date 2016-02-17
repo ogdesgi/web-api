@@ -1,5 +1,6 @@
 package com.esgi.events.webservice;
 
+import com.esgi.events.models.Categories;
 import com.esgi.events.models.Category;
 import com.esgi.events.models.Event;
 
@@ -27,8 +28,19 @@ public class CategoryRestClient {
                                 .create(CategoryService.class);
     }
 
-    public Call<List<Category>> getCategories() throws IOException {
+    public Call<Categories> getCategories(){
         return categoryService.getCategories();
     }
 
+    public Call<Category> postCategory(String token, Category category){
+        return categoryService.postCategory(token, category);
+    }
+
+    public Call<Category> updateCategory(String token, String id){
+        return categoryService.updateCategory(token, id);
+    }
+
+    public Call<Category> deleteCategory(String token, String id){
+        return categoryService.deleteCategory(token, id);
+    }
 }
