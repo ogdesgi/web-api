@@ -10,9 +10,7 @@ import io.realm.RealmObject;
  */
 public class Category{
 
-    @SerializedName("_id")
     private String _id;
-    @SerializedName("name")
     private String name;
 
     public Category(){}

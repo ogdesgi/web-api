@@ -29,9 +29,9 @@ public interface EventService {
     @POST("/myeventmanager/events")
     Call<Event> makeEvent (@Header("Authorization") String authorization,
                            @Part("logo\"; filename=\"image.jpeg\" ") RequestBody file,
-                           @Part("title") String title,
-                           @Part("description") String description,
-                           @Part("category") String category);
+                           @Part("title") RequestBody title,
+                           @Part("description") RequestBody description,
+                           @Part("category") RequestBody category);
 
     @GET("/myeventmanager/events")
     Call<Events> getEvents();

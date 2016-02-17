@@ -24,7 +24,7 @@ public interface CategoryService {
     Call<Categories> getCategories();
 
     @Headers("Content-Type: application/json")
-    @POST("/myeventmanager/categories/")
+    @POST("/myeventmanager/categories")
     Call<Category> postCategory(@Header("Authorization") String authorization, @Body Category category);
 
     @GET("/myeventmanager/categories/{id}")

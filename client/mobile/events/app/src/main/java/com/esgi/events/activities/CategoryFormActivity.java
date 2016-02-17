@@ -70,12 +70,17 @@ public class CategoryFormActivity extends AppCompatActivity{
                     }
                 });
             }else {
+                Log.e(TAG, "action: ");
                 Call<Category> call = categoryRestClient.postCategory(token, new Category(editCategory.getText().toString()));
                 call.enqueue(new Callback<Category>() {
                     @Override
                     public void onResponse(Response<Category> response, Retrofit retrofit) {
                         if(response.isSuccess()){
                             finish();
+                        }else{
+                            Log.e(TAG, "onFailure: " + response.code() );
+                            Log.e(TAG, "onFailure: " + response.message() );
+
                         }
                     }
 
