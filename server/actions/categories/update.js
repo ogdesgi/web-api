@@ -19,14 +19,20 @@ module.exports = function(app) {
 			if(err || !category)
 				return res.status(404).json({success: false, error: 'Category was not found'});
 			
-			category.name = body.name;
-			category.save(function(err, done) {
-				if(err || !done)
-					return res.status(500).json({success: false, error: 'Internal server error'});
+			Category.findOne({name: body.name}, function(err, category) {
+				if(err || !category)
+					return res.status(404).json({success: false, error: 'Category not found'});
+				if(category)
+					return res.status(403).json({success: false, error: 'Category with this name already exists'});
 				
-				res.json({success: true, changed: category.name});
+				category.name = body.name;
+				category.save(function(err, done) {
+					if(err || !done)
+						return res.status(500).json({success: false, error: 'Internal server error'});
+					
+					res.json({success: true, changed: category.name});
+				});				
 			});
 		});
-		
 	};
 };

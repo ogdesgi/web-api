@@ -24,7 +24,7 @@ module.exports = function(app) {
 			
 			// Does the provided category exist?
 			var Category = app.models.Category;
-			Category.findById({_id: req.body.category}, function(err, cat) {
+			Category.findOne({name: req.body.category}, function(err, cat) {
 				if(err || !cat)
 					return res.status(404).json({success: false, error: 'Category was not found'}); // 404 Not Found
 				

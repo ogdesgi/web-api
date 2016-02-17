@@ -23,34 +23,41 @@ module.exports = function(app) {
 		Event.findOne({_id: evtId}, function(err, event) {
 			if(err || !event)
 				return res.status(404).json({success: false, error: 'Event was not found'}); // 404 Not Found
-			if(!event.creator.equals(req.user._id))
+			if(!event.creator._id === req.user._id)
 				return res.status(403).json({success: false, error: 'Event can only be modified by its creator'}); // 403 Forbidden
 			
-			var changes = {};
-			if(body.title) {
-				event.title = body.title;
-				changes.title = event.title;
-			}
-			if(body.description) {
-				event.description = body.description;
-				changes.description = event.description;
-			}
-			if(body.date) {					
-				event.date = body.date;
-				changes.date = event.date;
-			}
-			if(req.file) {
-				if(event.logo)
-					fs.unlink('storage/' + event.logo); // Removes the previous logo if there was one
-				event.logo = req.file.filename;
-				changes.logo = event.logo;
-			}
-			
-			event.save(function(err, done) {
-				if(err || !done)
-					return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
+			Event.findOne({title: body.title}, function(err, event) {
+				if(err || !event)
+					return res.status(404).json({success: false, error: 'Event not found'});
+				if(event)
+					return res.status(403).json({success: false, error: 'Event with this name already exists'});
 				
-				res.status(200).json({success: true, changed: changes}); // 200 OK
+				var changes = {};
+				if(body.title) {
+					event.title = body.title;
+					changes.title = event.title;
+				}
+				if(body.description) {
+					event.description = body.description;
+					changes.description = event.description;
+				}
+				if(body.date) {					
+					event.date = body.date;
+					changes.date = event.date;
+				}
+				if(req.file) {
+					if(event.logo)
+						fs.unlink('storage/' + event.logo); // Removes the previous logo if there was one
+					event.logo = req.file.filename;
+					changes.logo = event.logo;
+				}
+				
+				event.save(function(err, done) {
+					if(err || !done)
+						return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
+					
+					res.status(200).json({success: true, changed: changes}); // 200 OK
+				});
 			});
 		});
 	};

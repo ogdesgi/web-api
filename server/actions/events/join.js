@@ -18,7 +18,7 @@ module.exports = function(app) {
 		Event.findOne({_id: evtId}, function(err, event) {
 			if(err || !event)
 				return res.status(404).json({success: false, error: 'Event was not found'}); // 404 Not Found
-			if(event.creator.equals(participant._id))
+			if(event.creator._id === participant._id)
 				return res.status(403).json({success: false, error: 'Event was created by this user'}); // 403 Forbidden
 			if(-1 < event.participants.indexOf(participant._id))
 				return res.status(403).json({success: false, error: 'Already participating in this event'});

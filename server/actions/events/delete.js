@@ -15,7 +15,7 @@ module.exports = function(app) {
 		Event.findById({_id: evtId}, function(err, event) {
 			if(err || !event)
 				return res.status(404).json({success: false, error: 'Event was not found'}); // 404 Not Found
-			if(!event.creator.equals(req.user._id))
+			if(!event.creator._id === req.user._id)
 				return res.status(403).json({success: false, error: 'Event can only be deleted by its creator'}); // 403 Forbidden
 			
 			event.remove(function(err, done) {
