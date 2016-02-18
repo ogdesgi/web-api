@@ -45,11 +45,18 @@ module.exports = function(app) {
 				changes.password = user.password;
 			}
 			
-			user.save(function(err, done) {
-				if(err || !done)
-					return res.status(500).json({success: false, error: 'Internal server error'});
+			User.findOne({email: user.email}, function(err, found) {
+				if(err)
+					return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
+				if(found && found._id != userId)
+					return res.status(403).json({success: false, error: 'Email already in use'}); // 500 Internal Server Error
 				
-				res.status(200).json({success: true, changed: changes}); // 200 OK
+				user.save(function(err, done) {
+					if(err || !done)
+						return res.status(500).json({success: false, error: 'Internal server error'});
+					
+					res.status(200).json({success: true, changed: changes}); // 200 OK
+				});
 			});
 		});
 	};
