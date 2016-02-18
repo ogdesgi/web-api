@@ -22,20 +22,15 @@ module.exports = function(app) {
 		var User = app.models.User;
 		
 		// Check user registration and password validity
-		User.findOne({email: body.email}, function(err, user) {
+		var encPass = User.encryptPassword(body.password);
+		User.verify(body.email, encPass, function(err, user) {
 			if(err || !user)
-				return res.status(404).json({success: false, error: 'Invalid email'}); // 404 Not Found
+				return res.status(404).json({success: false, error: 'Invalid email or password'});
 			
-			var encPass = User.encryptPassword(body.password);
-			user.verifyPassword(encPass, function(err, goodPass) {
-				if(err || !goodPass)
-					return res.status(404).json({success: false, error: 'Invalid password'});
-				
-				// If user was found, then apply token on user ID, expires in 1 hour
-				var token = jwt.sign({_id: user._id}, settings.tokenSecret, {expiresIn: settings.tokenTTL});
-				
-				res.status(200).json({success: true, token: token, expires: settings.tokenTTL, id: user._id}); // 200 OK
-			});
+			// If user was found, then apply token on user ID, expires in 1 hour
+			var token = jwt.sign({_id: user._id}, settings.tokenSecret, {expiresIn: settings.tokenTTL});
+			
+			res.status(200).json({success: true, token: token, expires: settings.tokenTTL, id: user._id}); // 200 OK
 		});
 	};
 };

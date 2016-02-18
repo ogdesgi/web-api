@@ -27,8 +27,8 @@ module.exports = function(app) {
 	};
 
 	// Instance method to compare the given password with the stored one when logging in
-	UserSchema.methods.verifyPassword = function(candidate, cb) {
-		return this.model('User').findOne({ password: candidate}, cb);
+	UserSchema.statics.verify = function(candidateEmail, candidatePassword, cb) {
+		return this.model('User').findOne({email: candidateEmail, password: candidatePassword}, cb);
 	};
 
 	UserSchema.plugin(require('mongoose-timestamp'));
