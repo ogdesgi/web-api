@@ -11,6 +11,7 @@ module.exports = function(app) {
 	return function(req, res, next) {
 		var evtId = req.params.evtid;
 		
+		// Does the event exist? Is the user attempting to delete it its creator?
 		var Event = app.models.Event;
 		Event.findById({_id: evtId}, function(err, event) {
 			if(err || !event)
@@ -18,6 +19,7 @@ module.exports = function(app) {
 			if(!event.creator._id === req.user._id)
 				return res.status(403).json({success: false, error: 'Event can only be deleted by its creator'}); // 403 Forbidden
 			
+			// Delete event
 			event.remove(function(err, done) {
 				if(err || !done)
 					return res.status(500).json('Internal server error'); // 500 Internal Server Error

@@ -18,12 +18,12 @@ module.exports = function(app) {
 		
 		var evtId = req.params.evtid;
 		
-		// Check existence of event based on its ID
+		// Does the event exist? Is the user attempting to modify it its creator?
 		var Event = app.models.Event;
 		Event.findOne({_id: evtId}, function(err, event) {
 			if(err || !event)
 				return res.status(404).json({success: false, error: 'Event was not found'}); // 404 Not Found
-			if(!event.creator._id === req.user._id)
+			if(!event.creator.equals(req.user._id)) // Because equals operator does not work with objects
 				return res.status(403).json({success: false, error: 'Event can only be modified by its creator'}); // 403 Forbidden
 			
 			Event.findOne({title: body.title}, function(err, event) {
@@ -32,6 +32,7 @@ module.exports = function(app) {
 				if(event)
 					return res.status(403).json({success: false, error: 'Event with this name already exists'});
 				
+				// Register changes made, update event
 				var changes = {};
 				if(body.title) {
 					event.title = body.title;

@@ -21,11 +21,11 @@ module.exports = function(app) {
 		
 		var User = app.models.User;
 		
-		// Check user registration and password validity
+		// Check user credentials with verify static method
 		var encPass = User.encryptPassword(body.password);
 		User.verify(body.email, encPass, function(err, user) {
 			if(err || !user)
-				return res.status(404).json({success: false, error: 'Invalid email or password'});
+				return res.status(404).json({success: false, error: 'Invalid email or password'}); // 404 Bad Request
 			
 			// If user was found, then apply token on user ID, expires in 1 hour
 			var token = jwt.sign({_id: user._id}, settings.tokenSecret, {expiresIn: settings.tokenTTL});

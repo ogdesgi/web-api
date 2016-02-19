@@ -16,7 +16,7 @@ module.exports = function(app) {
 		
 		var userId = req.params.userid;
 		
-		// Find user based on their ID (given in PUT request)
+		// Does the user exist? Is the user attempting to modify it the account's creator?
 		var User = app.models.User;
 		User.findById({_id: userId}, function(err, user) {
 			if(err)
@@ -45,12 +45,14 @@ module.exports = function(app) {
 				changes.password = user.password;
 			}
 			
+			// Is the updated email already belonging to another user?
 			User.findOne({email: user.email}, function(err, found) {
 				if(err)
-					return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
-				if(found && found._id != userId)
-					return res.status(403).json({success: false, error: 'Email already in use'}); // 500 Internal Server Error
+					return res.status(500).json({success: false, error: 'Internal server error'});
+				if(found._id != userId)
+					return res.status(403).json({success: false, error: 'Email already in use'});
 				
+				// Update user
 				user.save(function(err, done) {
 					if(err || !done)
 						return res.status(500).json({success: false, error: 'Internal server error'});

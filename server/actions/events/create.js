@@ -22,6 +22,8 @@ module.exports = function(app) {
 			if(found)
 				return res.status(403).json({success: false, error: 'This event already exists'}); // 403 Forbidden
 			
+			var userFullname = req.user.firstname + ' ' + req.user.lastname;
+			
 			// Does the provided category exist?
 			var Category = app.models.Category;
 			Category.findOne({name: req.body.category}, function(err, cat) {
@@ -32,16 +34,22 @@ module.exports = function(app) {
 					title: body.title,
 					description: body.description,
 					creator: req.user,
+					creatorName: userFullname,
 					category: cat,
-					participants: [req.user]
+					categoryName: cat.name,
+					participants: [req.user],
+					participantsNames: [userFullname]
 				});
-
+				
+				// By default, the event is said to be held at the date of its creation
 				if(body.date)
 					event.date = body.date;
 				
+				// By default, an event can be missing a logo
 				if(req.file)
 					event.logo = req.file.filename;
 				
+				// Create event
 				event.save(function(err, instance) {
 					if(err || !instance)
 						return res.status(500).json({success: false, error: 'Internal server error'});

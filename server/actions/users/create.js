@@ -31,6 +31,7 @@ module.exports = function(app) {
 				password: encPass
 			});
 			
+			// Create user
 			user.save(function(err, done) {
 				if(err || !done)
 					return res.status(500).json({success: false, error: 'Internal server error'});

@@ -12,6 +12,8 @@ module.exports = function(app) {
 		var userId = req.params.userid;
 		
 		var User = app.models.User;
+		
+		// Does the user exist? Is the user attempting to delete it the account's creator?
 		User.findById({_id: userId}, function(err, user) {
 			if(err)
 				return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
@@ -20,6 +22,7 @@ module.exports = function(app) {
 			if(userId != req.user._id) // != is standard inequality (not equal value, regardless of type)
 				return res.status(403).json({success: false, error: 'Not logged in as this user'}); // 403 Forbidden
 			
+			// Delete user
 			user.remove(function(err, done) {
 				if(err || !done)
 					return res.status(500).json('Internal server error');

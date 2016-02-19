@@ -26,7 +26,7 @@ module.exports = function(app) {
 		return md5(pwd + app.settings.passwordAddOn);
 	};
 
-	// Instance method to compare the given password with the stored one when logging in
+	// Static method to compare the given credentials with the stored ones when logging in
 	UserSchema.statics.verify = function(candidateEmail, candidatePassword, cb) {
 		return this.model('User').findOne({email: candidateEmail, password: candidatePassword}, cb);
 	};

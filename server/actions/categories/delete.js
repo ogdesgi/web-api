@@ -10,6 +10,7 @@ module.exports = function(app) {
 	return function(req, res, next) {
 		var catId = req.params.catid;
 		
+		// Does the category exist?
 		var Category = app.models.Category;
 		Category.findById({_id: catId}, function(err, category) {
 			if(err || !category)
@@ -23,6 +24,7 @@ module.exports = function(app) {
 				if(event)
 					return res.status(403).json({success: false, error: 'One or more events are linked to this category'}); // 403 Forbidden
 				
+				// Delete category
 				category.remove(function(err, done) {
 					if(err || !done)
 						return res.status(500).json({success: false, error: 'Internal server error'});

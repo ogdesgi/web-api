@@ -20,6 +20,7 @@ module.exports = function(app) {
 			if(found)
 				return res.status(403).json({success: false, error: 'This category already exists'}); // 403 Forbidden
 			
+			// Create category
 			var category = new Category({ name: body.name });
 			category.save(function(err, instance) {
 				if(err || !instance)

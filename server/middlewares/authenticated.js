@@ -32,6 +32,7 @@ module.exports = function(app) {
 			return res.status(401).json({success: false, error: 'Invalid token'});
 		}
 		
+		// Check if retrieved ID belongs to a User
 		var User = app.models.User;
 		User.findOne({_id: decoded._id}, function(err, found) {
 			if(err || !found)
