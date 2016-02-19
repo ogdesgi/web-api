@@ -27,8 +27,8 @@ module.exports = function(app) {
 				return res.status(403).json({success: false, error: 'Event can only be modified by its creator'}); // 403 Forbidden
 			
 			Event.findOne({title: body.title}, function(err, event) {
-				if(err || !event)
-					return res.status(404).json({success: false, error: 'Event not found'});
+				if(err)
+					return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
 				if(event)
 					return res.status(403).json({success: false, error: 'Event with this name already exists'});
 				
