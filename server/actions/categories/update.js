@@ -3,7 +3,7 @@
 * 
 * Access route: PUT /myeventmanager/category/{cat_id}
 * Middlewares used: authenticated (checks if user is logged in)
-* Nodes implemented: fs (handle OS filesystem)
+* Nodes implemented: NONE
 */
 
 module.exports = function(app) {
@@ -21,10 +21,10 @@ module.exports = function(app) {
 				return res.status(404).json({success: false, error: 'Category was not found'}); // 404 Not Found
 			
 			// Is the name in the request body already given to another category?
-			Category.findOne({name: body.name}, function(err, category) {
+			Category.findOne({name: body.name}, function(err, cat) {
 				if(err)
 					return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
-				if(category)
+				if(cat)
 					return res.status(403).json({success: false, error: 'Category with this name already exists'}); // 403 Forbidden
 				
 				// Update category

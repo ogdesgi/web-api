@@ -26,10 +26,10 @@ module.exports = function(app) {
 			if(!event.creator.equals(req.user._id)) // Because equals operator does not work with objects
 				return res.status(403).json({success: false, error: 'Event can only be modified by its creator'}); // 403 Forbidden
 			
-			Event.findOne({title: body.title}, function(err, event) {
+			Event.findOne({title: body.title}, function(err, evt) {
 				if(err)
 					return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
-				if(event)
+				if(evt)
 					return res.status(403).json({success: false, error: 'Event with this name already exists'});
 				
 				// Register changes made, update event
