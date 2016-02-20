@@ -50,37 +50,42 @@ public class CategoryFormActivity extends AppCompatActivity{
 
     public void action(View view) {
 
-
         if(!editCategory.getText().toString().equals("")){
             CategoryRestClient categoryRestClient = new CategoryRestClient();
 
             if(action.getText().toString().equals("Modifier")){
-                Call<Category> call = categoryRestClient.updateCategory(token, categoryId);
+                Call<Category> call = categoryRestClient.updateCategory(token, categoryId, new Category(editCategory.getText().toString()));
                 call.enqueue(new Callback<Category>() {
                     @Override
                     public void onResponse(Response<Category> response, Retrofit retrofit) {
                         if(response.isSuccess()){
+                            setResult(RESULT_OK);
                             finish();
+                        }else{
+                            Log.e(TAG, "no success: " + response.code() );
+                            Log.e(TAG, "no success: " + response.message() );
+                            Log.e(TAG, "no success: " + token);
                         }
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage() );
+                        Log.e(TAG, "onFailure: " + token );
                     }
                 });
             }else {
-                Log.e(TAG, "action: ");
+                Log.e(TAG, "test: " + token );
                 Call<Category> call = categoryRestClient.postCategory(token, new Category(editCategory.getText().toString()));
                 call.enqueue(new Callback<Category>() {
                     @Override
                     public void onResponse(Response<Category> response, Retrofit retrofit) {
                         if(response.isSuccess()){
+                            setResult(RESULT_OK);
                             finish();
                         }else{
                             Log.e(TAG, "onFailure: " + response.code() );
                             Log.e(TAG, "onFailure: " + response.message() );
-
                         }
                     }
 

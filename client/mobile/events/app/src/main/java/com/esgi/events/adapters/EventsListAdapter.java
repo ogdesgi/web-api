@@ -1,8 +1,10 @@
 package com.esgi.events.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +13,12 @@ import android.widget.TextView;
 
 import com.esgi.events.R;
 import com.esgi.events.activities.EventDetailActivity;
+import com.esgi.events.activities.LoginActivity;
 import com.esgi.events.models.Event;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -21,14 +26,17 @@ import java.util.ArrayList;
  */
 public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder> {
 
+    private static final String TAG = "EventsListAdapter";
     private ArrayList<Event> eventArrayList;
     private Context context;
     public static final String PUT_EVENT_ID = "eventId";
+    public static String userId;
 
 
-    public EventsListAdapter(ArrayList<Event> eventArrayList, Context context){
+    public EventsListAdapter(ArrayList<Event> eventArrayList, Context context, String userId){
         this.eventArrayList = eventArrayList;
         this.context = context;
+        this.userId = userId;
     }
 
     @Override
@@ -80,18 +88,22 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e(TAG, "onClick: " + event.get_id());
                     Intent intent = new Intent(context, EventDetailActivity.class);
-                    intent.putExtra(PUT_EVENT_ID, event.getId());
-                    context.startActivity(new Intent(context, EventDetailActivity.class));
+                    intent.putExtra(PUT_EVENT_ID, event.get_id());
+                    intent.putExtra("userId", userId);
+                    ((Activity) context).startActivityForResult(intent, 1);
                 }
             });
             title.setText(event.getTitle());
-            date.setText(event.getId()+"");
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            
+            date.setText(df.format(event.getDate()));
             //date.setText(FonctionsHelper.dateToString(event.getDate()));
             Picasso.with(context).load(event.getLogo())
                     .resize(140,100)
                     .centerCrop()
-                    .placeholder(R.drawable.ic_image_panorama)
+                    .placeholder(R.drawable.background)
                     .into(thumbnail);
         }
     }

@@ -5,9 +5,10 @@ import io.realm.RealmObject;
 /**
  * Created by sylvainvincent on 16/01/16.
  */
-public class User{
+public class User extends RealmObject{
 
     private String id;
+    private String _id;
     private String firstname;
     private String lastname;
     private String email;
@@ -67,5 +68,13 @@ public class User{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

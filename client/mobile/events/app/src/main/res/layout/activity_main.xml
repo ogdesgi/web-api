@@ -2,6 +2,8 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:id="@+id/main_coordinator"
     android:fitsSystemWindows="true"
@@ -19,18 +21,46 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
+        android:id="@+id/content_main"
         android:layout_marginTop="60dp"
         layout="@layout/content_main"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/event_form_fab"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:onClick="actionToEventFormActivity"
-        android:src="@drawable/ic_add" />
+        android:layout_gravity="end|bottom"
+        app:layout_anchor="@id/content_main"
+        app:layout_anchorGravity="bottom|right|end"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/colorAccent"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/link_to_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_add"
+            fab:fab_title="Gestion de catégorie" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_event_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_add"
+            fab:fab_title="Ajouter un événement" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

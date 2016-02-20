@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -77,8 +78,6 @@ public class EventFormActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra("userId");
 
         categoriesNames = new ArrayList<String>();
-        categoriesNames.add("");
-        categoriesNames.add("Créer une nouvelle catégorie");
         Call<Categories> call = new CategoryRestClient().getCategories();
         call.enqueue(new Callback<Categories>() {
             @Override
@@ -90,9 +89,24 @@ public class EventFormActivity extends AppCompatActivity {
 
                     for (Category category : categoryList) {
                         categoriesNames.add(category.getName());
+                        Log.e(TAG, "onResponse: " + category.get_id() );
                     }
 
+                } else {
+                    categoriesNames.add("Créer une catégorie");
+                    categoryEventSpinner.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(EventFormActivity.this, CategoriesActivity.class);
+                            intent.putExtra("token", token);
+                            startActivity(intent);
+                        }
+                    });
                 }
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(EventFormActivity.this, android.R.layout.simple_list_item_1, categoriesNames);
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                categoryEventSpinner.setAdapter(arrayAdapter);
+
             }
 
             @Override
@@ -101,24 +115,8 @@ public class EventFormActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> arrayAdapter =new ArrayAdapter<>(EventFormActivity.this,android.R.layout.simple_list_item_1,categoriesNames);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categoryEventSpinner.setAdapter(arrayAdapter);
-        categoryEventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 1) {
-                    Intent intent = new Intent(EventFormActivity.this, CategoriesActivity.class);
-                    intent.putExtra("token", token);
-                    startActivity(intent);
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
 
     }
 
@@ -161,18 +159,24 @@ public class EventFormActivity extends AppCompatActivity {
                     event.setTitle(titleField.getText().toString());
                     event.setDescription(descriptionField.getText().toString());
                     event.setDate(new Date());
-                    event.setCategory(categoryList.get(categoryEventSpinner.getSelectedItemPosition()-2));
-                    event.setCreator(new User(userId));
-                    List<User> users = new ArrayList<>();
+                    Log.e(TAG, "onClick: " + categoryList.get(categoryEventSpinner.getSelectedItemPosition()).get_id());
+                    Log.e(TAG, "onClick: " + categoryList.get(categoryEventSpinner.getSelectedItemPosition()).getName());
+                    event.setCategory(categoryList.get(categoryEventSpinner.getSelectedItemPosition()).getName());
+                    event.setCreator(userId);
+                    RealmList<User> users = new RealmList<>();
                     users.add(new User(userId));
-                    event.setParticipants(users);
                     EventRestClient eventRestClient = new EventRestClient();
-                    File file = new File(photoPath);
-                    if(!file.exists()) {
-                        ContextCompat.getDrawable(this, R.drawable.meeting);
-                        file = null;
+                    File file = null;
+                    RequestBody requestBody = null;
+                    if(photoPath != null){
+                        file = new File(photoPath);
+                        if(!file.exists()) {
+                            ContextCompat.getDrawable(this, R.drawable.meeting);
+                            file = null;
+                            requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+                        }
                     }
-                    RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+
                     Call<Event> call = eventRestClient.createEvents(token, requestBody, event);
                     call.enqueue(new Callback<Event>() {
                         @Override
@@ -181,10 +185,14 @@ public class EventFormActivity extends AppCompatActivity {
                                 setResult(RESULT_OK);
                                 finish();
                             } else {
-                                Log.e(TAG, "no success: " + event.getCategory().get_id());
-                                Log.e(TAG, "no success: " + response.code());
-                                Log.e(TAG, "no success: " + response.message());
-                                Snackbar.make(coordinatorLayoutEventForm, "Une erreur s'est produite lors la création de l'événement", Snackbar.LENGTH_LONG).show();
+                                if(response.code() == 403){
+                                    Snackbar.make(coordinatorLayoutEventForm, "Cette évènement existe déjà", Snackbar.LENGTH_LONG).show();
+                                }else{
+                                    Log.e(TAG, "no success: " + event.getCategory());
+                                    Log.e(TAG, "no success: " + response.code());
+                                    Log.e(TAG, "no success: " + response.message());
+                                    Snackbar.make(coordinatorLayoutEventForm, "Une erreur s'est produite lors la création de l'événement", Snackbar.LENGTH_LONG).show();
+                                }
                             }
 
                         }

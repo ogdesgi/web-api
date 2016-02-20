@@ -20,7 +20,7 @@ public interface UserService {
 
     @Headers("Content-Type: application/json")
     @POST("/myeventmanager/auth/login")
-    Call<com.esgi.events.models.Test> toLogin(@Body User user);
+    Call<User> toLogin(@Body User user);
 
     @Headers("Content-Type: application/json")
     @POST("/myeventmanager/users")

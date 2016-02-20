@@ -20,6 +20,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:text="Catégorie :"/>
+
+    <TextView
+        android:id="@+id/event_categorie"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""/>
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:text="Description :"/>
 
     <TextView
@@ -27,7 +41,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bonjour et bienvenue dans cette conference"/>
+        android:text=""/>
 
     <TextView
         android:layout_marginTop="30dp"
@@ -37,17 +51,32 @@
         android:text="Date :"/>
 
     <TextView
+        android:id="@+id/event_date"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="01/03/2016"/>
 
     <TextView
-        android:id="@+id/event_date"
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Participant :"/>
+        android:text="Organisateur :"/>
+
+    <TextView
+        android:id="@+id/event_creator"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""/>
+
+    <Button
+        android:id="@+id/event_participant_button"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Afficher les participants"/>
 
 </LinearLayout>
