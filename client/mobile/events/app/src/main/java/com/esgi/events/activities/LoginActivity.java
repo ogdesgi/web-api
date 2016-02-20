@@ -15,8 +15,6 @@ import com.esgi.events.R;
 import com.esgi.events.models.User;
 import com.esgi.events.webservice.UserRestClient;
 
-import junit.framework.Test;
-
 import java.io.IOException;
 
 import butterknife.Bind;
@@ -40,7 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordField;
     @Bind(R.id.coordinator_login)
     CoordinatorLayout coordinatorLogin;
-    private Callback<com.esgi.events.models.Test> userCallback;
+    private Callback<User> userCallback;
+
+    public static String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +49,22 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         toolbarInit();
 
-        this.userCallback = new Callback<com.esgi.events.models.Test>() {
+        this.userCallback = new Callback<User>() {
 
             @Override
-            public void onResponse(Response<com.esgi.events.models.Test> response, Retrofit retrofit) {
+            public void onResponse(Response<User> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
 
-                    //Realm realm = Realm.getInstance(LoginActivity.this);
-                   // realm.beginTransaction();
+                //    Realm realm = Realm.getInstance(LoginActivity.this);
 
-                    com.esgi.events.models.Test test = response.body();
-                   /* realm.copyToRealm(test);
+                    User user = response.body();
+                    /*realm.beginTransaction();
+                    User realmUser = realm.copyToRealm(user);
                     realm.commitTransaction();*/
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("token",test.getToken());
-                    intent.putExtra("userId",test.getId());
+                    token = user.getToken();
+                    intent.putExtra("token",user.getToken());
+                    intent.putExtra("userId",user.getId());
                     startActivity(intent);
                 } else {
                     Snackbar.make(coordinatorLogin, "Identifiant/mot de passe incorrect", Snackbar.LENGTH_LONG).show();

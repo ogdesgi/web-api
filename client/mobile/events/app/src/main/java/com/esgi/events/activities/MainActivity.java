@@ -58,10 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccess()) {
                     Events eventList = response.body();
                     for (Event event : eventList.getEventList()) {
-                        eventArrayList.add(new Event(event.getId(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreator(), event.getDate()));
+                        Log.e(TAG, "onResponse: " + event.get_id() );
+                        eventArrayList.add(new Event(event.get_id(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreator(), event.getDate()));
                     }
                     eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList, MainActivity.this));
+                    eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList, MainActivity.this, userId));
                 } else {
 
                     Log.e(TAG, "onResponse: non success ");
@@ -75,6 +76,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
     }
 
     private void init() {
@@ -108,10 +119,21 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void actionToEventFormActivity(View view) {
-        Intent intent = new Intent(this, EventFormActivity.class);
-        intent.putExtra("token",token);
-        intent.putExtra("userId",userId);
-        startActivity(intent);
+
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()){
+            case R.id.add_event_button:
+                intent = new Intent(this, EventFormActivity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, 1);
+                break;
+            case R.id.link_to_category:
+                intent = new Intent(this, CategoriesActivity.class);
+                intent.putExtra("token", token);
+                startActivity(intent);
+                break;
+        }
     }
 }

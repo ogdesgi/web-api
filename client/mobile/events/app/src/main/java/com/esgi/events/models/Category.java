@@ -8,7 +8,7 @@ import io.realm.RealmObject;
 /**
  * Created by sylvainvincent on 17/01/16.
  */
-public class Category{
+public class Category extends RealmObject{
 
     private String _id;
     private String name;

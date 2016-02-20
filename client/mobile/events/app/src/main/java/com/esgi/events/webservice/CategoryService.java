@@ -13,6 +13,7 @@ import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -20,20 +21,21 @@ import retrofit.http.Query;
  */
 public interface CategoryService {
 
-    @GET("/myeventmanager/categories/")
+    @GET("/myeventmanager/categories")
     Call<Categories> getCategories();
 
     @Headers("Content-Type: application/json")
     @POST("/myeventmanager/categories")
     Call<Category> postCategory(@Header("Authorization") String authorization, @Body Category category);
 
-    @GET("/myeventmanager/categories/{id}")
-    Call<List<Category>> getCategory(@Header("Authorization") String authorization,@Query("id") String id);
+    @GET("/myeventmanager/categories/{catid}")
+    Call<List<Category>> getCategory(@Header("Authorization") String authorization, @Path("catid") String id);
 
-    @PUT("/myeventmanager/categories/{id}")
-    Call<Category> updateCategory(@Header("Authorization") String authorization,@Query("id") String id);
+    @Headers("Content-Type: application/json")
+    @PUT("/myeventmanager/categories/{catid}")
+    Call<Category> updateCategory(@Header("Authorization") String authorization, @Path("catid") String id, @Body Category category);
 
-    @DELETE("/myeventmanager/categories/{id}")
-    Call<Category> deleteCategory(@Header("Authorization") String authorization, @Query("id") String id);
+    @DELETE("/myeventmanager/categories/{catid}")
+    Call<Category> deleteCategory(@Header("Authorization") String authorization, @Path("catid") String id);
 
 }

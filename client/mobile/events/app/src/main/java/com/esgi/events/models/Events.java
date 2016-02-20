@@ -12,11 +12,21 @@ public class Events {
     @SerializedName(value="list")
     private List<Event> eventList;
 
+    private Event profile;
+
     public List<Event> getEventList() {
         return eventList;
     }
 
     public void setEventList(List<Event> eventList) {
         this.eventList = eventList;
+    }
+
+    public Event getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Event profile) {
+        this.profile = profile;
     }
 }
