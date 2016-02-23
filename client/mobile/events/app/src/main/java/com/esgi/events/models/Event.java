@@ -39,12 +39,12 @@ public class Event {
         this.logo = logo;
     }
 
-    public Event(String id, String title, String description, String photoPath, String creator, Date date) {
+    public Event(String id, String title, String description, String photoPath, String creatorName, Date date) {
         this._id = id;
         this.title = title;
         this.description = description;
         this.logo = photoPath;
-        this.creator = creator;
+        this.creatorName = creatorName;
         this.date = date;
     }
 

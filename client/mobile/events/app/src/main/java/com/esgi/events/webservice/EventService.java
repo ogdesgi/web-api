@@ -19,6 +19,7 @@ import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -49,6 +50,21 @@ public interface EventService {
 
     @GET("/myeventmanager/events/{evt_id}")
     Call<Events> getEvent(@Path("evt_id") String id);
+
+    @PUT("/myeventmanager/events/{evt_id}")
+    Call<Event> updateEvent(@Header("Authorization") String authorization,
+                             @Path("evt_id") String id,
+                             @Part("logo\"; filename=\"image.jpeg\" ") RequestBody file,
+                             @Part("title") RequestBody title,
+                             @Part("description") RequestBody description,
+                             @Part("category") RequestBody category);
+
+    @PUT("/myeventmanager/events/{evt_id}")
+    Call<Event> updateEventWithoutPhoto(@Header("Authorization") String authorization,
+                                         @Path("evt_id") String id,
+                                         @Part("title") RequestBody title,
+                                         @Part("description") RequestBody description,
+                                         @Part("category") RequestBody category);
 
     @DELETE("/myeventmanager/events/{evt_id}")
     Call<Events> deleteEvent(@Header("Authorization") String authorization, @Path("evt_id") String id);

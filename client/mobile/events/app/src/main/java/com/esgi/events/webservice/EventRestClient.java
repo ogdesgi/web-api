@@ -72,11 +72,11 @@ public class EventRestClient {
     }
 
     public Call<Event> joinEvent(String token, String id, User user){
-        return eventService.joinEvent("Bearer "+token, id, user);
+        return eventService.joinEvent("Bearer " + token, id, user);
     }
 
     public Call<Event> leaveEvent(String token, String id, User user){
-        return eventService.leaveEvent("Bearer "+token, id, user);
+        return eventService.leaveEvent("Bearer " + token, id, user);
     }
 
     public Call<Events> getEvents(){
@@ -90,5 +90,14 @@ public class EventRestClient {
         Log.e(TAG, "createEvents: " + event.getCategory() );
         if(file != null)return eventService.makeEvent("Bearer " + token, file, title, description, category);
         else return eventService.makeEventWithoutPhoto("Bearer " + token, title, description, category);
+    }
+
+    public Call<Event> updateEvent(String token, String id, RequestBody file, Event event){
+        RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"), event.getTitle());
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), event.getDescription());
+        RequestBody category = RequestBody.create(MediaType.parse("multipart/form-data"), event.getCategory());
+        Log.e(TAG, "createEvents: " + event.getCategory() );
+        if(file != null)return eventService.updateEvent("Bearer " + token, id, file, title, description, category);
+        else return eventService.updateEventWithoutPhoto("Bearer " + token, id, title, description, category);
     }
 }

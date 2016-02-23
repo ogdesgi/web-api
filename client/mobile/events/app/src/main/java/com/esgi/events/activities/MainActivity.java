@@ -57,9 +57,12 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(retrofit.Response<Events> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
                     Events eventList = response.body();
+                    Log.e(TAG, "onResponse: " +response.message() );
+
                     for (Event event : eventList.getEventList()) {
                         Log.e(TAG, "onResponse: " + event.get_id() );
-                        eventArrayList.add(new Event(event.get_id(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreator(), event.getDate()));
+                        Log.e(TAG, "onResponse: " + event.getCreatorName() );
+                        eventArrayList.add(new Event(event.get_id(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreatorName(), event.getDate()));
                     }
                     eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                     eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList, MainActivity.this, userId));

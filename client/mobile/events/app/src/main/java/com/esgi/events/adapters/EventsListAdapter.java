@@ -73,7 +73,8 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView title,
-                         date;
+                         date,
+                         author;
         private ImageView thumbnail;
 
         public ViewHolder(View itemView) {
@@ -81,6 +82,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
             title = (TextView) itemView.findViewById(R.id.row_event_title);
             date = (TextView) itemView.findViewById(R.id.row_event_date);
             thumbnail = (ImageView) itemView.findViewById(R.id.row_event_thumbnail);
+            author = (TextView) itemView.findViewById(R.id.row_event_author);
 
         }
 
@@ -99,6 +101,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             
             date.setText(df.format(event.getDate()));
+            author.setText("Organisé par " + event.getCreatorName());
             //date.setText(FonctionsHelper.dateToString(event.getDate()));
             Picasso.with(context).load(event.getLogo())
                     .resize(140,100)
