@@ -67,7 +67,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccent"
             fab:fab_icon="@drawable/ic_add"
-            fab:fab_title="Ordre décroissant" />
+            fab:fab_title="Changer d'ordre" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

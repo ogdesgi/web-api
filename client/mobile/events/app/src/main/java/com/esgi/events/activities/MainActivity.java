@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Call;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         this.init();
         token = getIntent().getStringExtra("token");
         userId = getIntent().getStringExtra("userId");
-        eventArrayList = new ArrayList<>();
+        eventArrayList = new ArrayList<Event>();
 
         EventRestClient eventRestClient = new EventRestClient();
         Call<Events> call = eventRestClient.getEvents();
@@ -126,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()){
@@ -142,8 +142,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.filter_button:
-                Collections.reverse(eventArrayList);
-                eventsListAdapter.updateData(eventArrayList);
+                Collections.reverse(this.eventArrayList);
+                eventsListAdapter = new EventsListAdapter(eventArrayList, MainActivity.this, userId);
+                eventRecyclerView.setAdapter(eventsListAdapter);
                 break;
         }
     }

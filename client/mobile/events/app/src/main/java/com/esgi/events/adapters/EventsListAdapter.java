@@ -50,9 +50,15 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         holder.bind(eventArrayList.get(position),context);
     }
 
-    public void updateData(ArrayList<Event> eventArrayList) {
-        this.eventArrayList.clear();
-        this.eventArrayList.addAll(eventArrayList);
+    public void updateData(ArrayList<Event> arrayList) {
+        if (arrayList != null) {
+            eventArrayList.clear();
+            eventArrayList.addAll(arrayList);
+        }
+        else {
+            Log.e(TAG, "updateData: arraylist null" );
+            eventArrayList = arrayList;
+        }
         notifyDataSetChanged();
     }
 
