@@ -35,6 +35,7 @@ public interface EventService {
                            @Part("logo\"; filename=\"image.jpeg\" ") RequestBody file,
                            @Part("title") RequestBody title,
                            @Part("description") RequestBody description,
+                           @Part("date") RequestBody date,
                            @Part("category") RequestBody category);
 
     @Multipart
@@ -42,6 +43,7 @@ public interface EventService {
     Call<Event> makeEventWithoutPhoto (@Header("Authorization") String authorization,
                            @Part("title") RequestBody title,
                            @Part("description") RequestBody description,
+                                       @Part("date") RequestBody date,
                                        @Part("category") RequestBody category);
 
 
@@ -53,18 +55,20 @@ public interface EventService {
 
     @PUT("/myeventmanager/events/{evt_id}")
     Call<Event> updateEvent(@Header("Authorization") String authorization,
-                             @Path("evt_id") String id,
+                             @Part("evt_id") RequestBody id,
                              @Part("logo\"; filename=\"image.jpeg\" ") RequestBody file,
                              @Part("title") RequestBody title,
                              @Part("description") RequestBody description,
-                             @Part("category") RequestBody category);
+                            @Part("date") RequestBody date,
+                            @Part("category") RequestBody category);
 
     @PUT("/myeventmanager/events/{evt_id}")
     Call<Event> updateEventWithoutPhoto(@Header("Authorization") String authorization,
-                                         @Path("evt_id") String id,
+                                         @Part("evt_id") RequestBody id,
                                          @Part("title") RequestBody title,
                                          @Part("description") RequestBody description,
-                                         @Part("category") RequestBody category);
+                                        @Part("date") RequestBody date,
+                                        @Part("category") RequestBody category);
 
     @DELETE("/myeventmanager/events/{evt_id}")
     Call<Events> deleteEvent(@Header("Authorization") String authorization, @Path("evt_id") String id);

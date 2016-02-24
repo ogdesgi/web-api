@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.esgi.events.R;
+import com.esgi.events.helpers.FonctionsHelper;
 import com.esgi.events.models.Categories;
 import com.esgi.events.models.Category;
 import com.esgi.events.models.Event;
@@ -34,7 +35,10 @@ import com.squareup.okhttp.RequestBody;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -158,7 +162,8 @@ public class EventFormActivity extends AppCompatActivity {
                     final Event event = new Event();
                     event.setTitle(titleField.getText().toString());
                     event.setDescription(descriptionField.getText().toString());
-                    event.setDate(new Date());
+                    Date date = FonctionsHelper.StringToDate(dateField.getText().toString());
+                    event.setDate(date);
                     Log.e(TAG, "onClick: " + categoryList.get(categoryEventSpinner.getSelectedItemPosition()).get_id());
                     Log.e(TAG, "onClick: " + categoryList.get(categoryEventSpinner.getSelectedItemPosition()).getName());
                     event.setCategory(categoryList.get(categoryEventSpinner.getSelectedItemPosition()).getName());
@@ -172,7 +177,8 @@ public class EventFormActivity extends AppCompatActivity {
                         file = new File(photoPath);
                         if(!file.exists()) {
                             ContextCompat.getDrawable(this, R.drawable.meeting);
-                            file = null;
+                        }else{
+                            Log.e(TAG, "createEvents: " + "file ok");
                             requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
                         }
                     }

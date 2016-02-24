@@ -2,6 +2,7 @@ package com.esgi.events.webservice;
 
 import android.util.Log;
 
+import com.esgi.events.helpers.FonctionsHelper;
 import com.esgi.events.models.Category;
 import com.esgi.events.models.Event;
 import com.esgi.events.models.Events;
@@ -85,19 +86,26 @@ public class EventRestClient {
 
     public Call<Event> createEvents(String token, RequestBody file, Event event){
         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"), event.getTitle());
+        RequestBody date = RequestBody.create(MediaType.parse("multipart/form-data"), FonctionsHelper.dateToString(event.getDate()));
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), event.getDescription());
         RequestBody category = RequestBody.create(MediaType.parse("multipart/form-data"), event.getCategory());
         Log.e(TAG, "createEvents: " + event.getCategory() );
-        if(file != null)return eventService.makeEvent("Bearer " + token, file, title, description, category);
-        else return eventService.makeEventWithoutPhoto("Bearer " + token, title, description, category);
+        if(file != null){
+            Log.e(TAG, "createEvents: " + "makeevent sans photo ");
+            Log.e(TAG, "createEvents: " + "makeevent sans photo " + FonctionsHelper.dateToString(event.getDate()));
+            return eventService.makeEvent("Bearer " + token, file, title, description, date, category);
+        }
+        else return eventService.makeEventWithoutPhoto("Bearer " + token, title, description, date, category);
     }
 
     public Call<Event> updateEvent(String token, String id, RequestBody file, Event event){
+        RequestBody eventId = RequestBody.create(MediaType.parse("multipart/form-data"), id);
         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"), event.getTitle());
+        RequestBody date = RequestBody.create(MediaType.parse("multipart/form-data"), FonctionsHelper.dateToString(event.getDate()));
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), event.getDescription());
         RequestBody category = RequestBody.create(MediaType.parse("multipart/form-data"), event.getCategory());
         Log.e(TAG, "createEvents: " + event.getCategory() );
-        if(file != null)return eventService.updateEvent("Bearer " + token, id, file, title, description, category);
-        else return eventService.updateEventWithoutPhoto("Bearer " + token, id, title, description, category);
+        if(file != null)return eventService.updateEvent("Bearer " + token, eventId, file, title, description, date, category);
+        else return eventService.updateEventWithoutPhoto("Bearer " + token, eventId, title, description, date, category);
     }
 }

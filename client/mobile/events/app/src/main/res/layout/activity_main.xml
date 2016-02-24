@@ -59,6 +59,16 @@
             fab:fab_icon="@drawable/ic_add"
             fab:fab_title="Ajouter un événement" />
 
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/filter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_add"
+            fab:fab_title="Ordre décroissant" />
+
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 

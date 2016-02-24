@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.esgi.events.R;
+import com.esgi.events.helpers.FonctionsHelper;
 import com.esgi.events.models.Categories;
 import com.esgi.events.models.Category;
 import com.esgi.events.models.Event;
@@ -78,6 +79,10 @@ public class EventModifActivity extends AppCompatActivity {
         token = getIntent().getStringExtra("token");
         userId = getIntent().getStringExtra("userId");
         eventId = getIntent().getStringExtra("eventId");
+        descriptionField.setText(getIntent().getStringExtra("eventDescription"));
+        titleField.setText(getIntent().getStringExtra("eventTitle"));
+        dateField.setText(getIntent().getStringExtra("eventDate"));
+
         modifyButton.setText("MODIFIER");
         categoriesNames = new ArrayList<String>();
         Call<Categories> call = new CategoryRestClient().getCategories();
@@ -156,7 +161,8 @@ public class EventModifActivity extends AppCompatActivity {
                     final Event event = new Event();
                     event.setTitle(titleField.getText().toString());
                     event.setDescription(descriptionField.getText().toString());
-                    event.setDate(new Date());
+                    Date date = FonctionsHelper.StringToDate(dateField.getText().toString());
+                    event.setDate(date);
                     Log.e(TAG, "onClick: " + categoryList.get(categoryEventSpinner.getSelectedItemPosition()).get_id());
                     Log.e(TAG, "onClick: " + categoryList.get(categoryEventSpinner.getSelectedItemPosition()).getName());
                     event.setCategory(categoryList.get(categoryEventSpinner.getSelectedItemPosition()).getName());
@@ -170,7 +176,8 @@ public class EventModifActivity extends AppCompatActivity {
                         file = new File(photoPath);
                         if(!file.exists()) {
                             ContextCompat.getDrawable(this, R.drawable.meeting);
-                            file = null;
+
+                        }else{
                             requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
                         }
                     }

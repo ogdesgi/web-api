@@ -39,7 +39,8 @@
 
         <activity android:name=".activities.CategoryFormActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity android:name=".activities.EventModifActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

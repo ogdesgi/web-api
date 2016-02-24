@@ -23,6 +23,8 @@ import com.esgi.events.webservice.EventService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit.Call;
@@ -35,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView eventRecyclerView;
     private TextView title;
     private final String TAG = getClass().getSimpleName();
-    ArrayList<Event> eventArrayList ;
+    private ArrayList<Event> eventArrayList ;
     private String token;
     private String userId;
+    private EventsListAdapter eventsListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(retrofit.Response<Events> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
                     Events eventList = response.body();
-                    Log.e(TAG, "onResponse: " +response.message() );
+                    Log.e(TAG, "onResponse: " + response.message());
 
                     for (Event event : eventList.getEventList()) {
                         Log.e(TAG, "onResponse: " + event.get_id() );
@@ -65,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
                         eventArrayList.add(new Event(event.get_id(), event.getTitle(), event.getDescription(), event.getLogo(), event.getCreatorName(), event.getDate()));
                     }
                     eventRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    eventRecyclerView.setAdapter(new EventsListAdapter(eventArrayList, MainActivity.this, userId));
+                    eventsListAdapter = new EventsListAdapter(eventArrayList, MainActivity.this, userId);
+                    eventRecyclerView.setAdapter(eventsListAdapter);
                 } else {
 
                     Log.e(TAG, "onResponse: non success ");
@@ -136,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, CategoriesActivity.class);
                 intent.putExtra("token", token);
                 startActivity(intent);
+                break;
+            case R.id.filter_button:
+                Collections.reverse(eventArrayList);
+                eventsListAdapter.updateData(eventArrayList);
                 break;
         }
     }

@@ -33,6 +33,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -110,9 +111,13 @@ public class EventDetailActivity extends AppCompatActivity {
                     Picasso.with(EventDetailActivity.this).load(event.getLogo()).placeholder(R.drawable.background).into(eventPicture);
                     eventTitle.setText(event.getTitle());
                     eventDescription.setText(event.getDescription());
-                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                     eventCategorie.setText(event.getCategoryName());
-                    eventDate.setText(df.format(event.getDate()));
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(event.getDate());
+                    cal.add(Calendar.DATE, 1);
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+                    eventDate.setText(df.format(cal.getTime()));
                     participants = event.getParticipantsNames();
                     if (event.getCreator().equals(userId)) {
                         modifyEventButton.setVisibility(View.VISIBLE);
@@ -198,7 +203,14 @@ public class EventDetailActivity extends AppCompatActivity {
                 alertDialogBuilder.show();
                 break;
             case R.id.modify_event_button:
-
+                Intent intent = new Intent(this, EventModifActivity.class);
+                intent.putExtra("token",LoginActivity.token);
+                intent.putExtra("userId", userId);
+                intent.putExtra("eventId", eventId);
+                intent.putExtra("eventDate", eventDate.getText().toString());
+                intent.putExtra("eventDescription", eventDescription.getText().toString());
+                intent.putExtra("eventTitle", eventTitle.getText().toString());
+                startActivityForResult(intent, 1);
                 break;
             case R.id.join_event_button:
                 if(joinEventButton.getTitle().equals("Rejoindre")){

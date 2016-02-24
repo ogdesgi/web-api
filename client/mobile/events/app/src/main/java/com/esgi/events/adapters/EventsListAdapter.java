@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by sylvainvincent on 21/01/16.
@@ -98,9 +99,12 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
                 }
             });
             title.setText(event.getTitle());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(event.getDate());
+            cal.add(Calendar.DATE, 1);
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             
-            date.setText(df.format(event.getDate()));
+            date.setText(df.format(cal.getTime()));
             author.setText("Organisé par " + event.getCreatorName());
             //date.setText(FonctionsHelper.dateToString(event.getDate()));
             Picasso.with(context).load(event.getLogo())
